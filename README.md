@@ -95,7 +95,7 @@ agent-skills/
 └── test-handoff/
 ```
 
-以后在这个总仓库修改技能、检查后提交。原仓库保留用于查阅历史；总仓库中的修改不自动回写原仓库。新增或调整安装资源时，同步更新 `skills.json`。
+以后在这个总仓库修改技能、检查后提交。原五个 GitHub 仓库已于 2026 年 11 月 5 日删除，完整历史保存在本地备份中。新增或调整安装资源时，同步更新 `skills.json`。
 
 完整检查：
 
@@ -111,12 +111,14 @@ python3 scripts/check_workspace.py
 
 本仓库采用五个本地源项目的当前内容，包含用户确认纳入的未提交技能修改。导入共 82 个源文件；业务材料、历史报告、IDE 设置、Git 元数据和依赖缓存留在本地。
 
-原仓库与基准提交、纳入的未提交文件及文件摘要记录在 [source-lock.json](source-lock.json)。原始提交历史保留在各来源仓库，导入后的修改由本仓库统一记录。
+原仓库与基准提交、纳入的未提交文件及文件摘要记录在 [source-lock.json](source-lock.json)，其中的旧远程地址仅用于追溯。导入后的修改由本仓库统一记录。
+
+删除旧远程前，已为五个仓库保存完整 Git 镜像和 bundle，并实际恢复核验了全部分支、标签与对象。旧本地工作区和未提交修改也保留。[备份与恢复说明](docs/legacy-repositories.md)记录备份位置和恢复步骤，[source-retirement.json](source-retirement.json)记录校验结果与 bundle 摘要。
 
 | 原仓库 | 总仓库中的目录 |
 | --- | --- |
-| [doc2html-skill](https://github.com/cgvcingcing/doc2html-skill) | `doc2html-skill/` |
-| [interaction-flow](https://github.com/cgvcingcing/interaction-flow) | `interaction-flow/` |
-| [spec2testplan-skill](https://github.com/cgvcingcing/spec2testplan-skill) | `spec2testplan-skill/` |
-| [test-analysis-framework](https://github.com/cgvcingcing/test-analysis-framework) | `test-analysis-framework/` |
-| [test-handoff](https://github.com/cgvcingcing/test-handoff) | `test-handoff/` |
+| `doc2html-skill` | [doc2html-skill/](doc2html-skill/) |
+| `interaction-flow` | [interaction-flow/](interaction-flow/) |
+| `spec2testplan-skill` | [spec2testplan-skill/](spec2testplan-skill/) |
+| `test-analysis-framework` | [test-analysis-framework/](test-analysis-framework/) |
+| `test-handoff` | [test-handoff/](test-handoff/) |

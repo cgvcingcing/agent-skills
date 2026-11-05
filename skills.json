@@ -1,11 +1,11 @@
 {
   "schema_version": 1,
   "repositories": {
-    "doc2html-skill": {"path": "doc2html-skill", "url": "https://github.com/cgvcingcing/doc2html-skill.git"},
-    "interaction-flow": {"path": "interaction-flow", "url": "https://github.com/cgvcingcing/interaction-flow.git"},
-    "spec2testplan-skill": {"path": "spec2testplan-skill", "url": "https://github.com/cgvcingcing/spec2testplan-skill.git"},
-    "test-analysis-framework": {"path": "test-analysis-framework", "url": "https://github.com/cgvcingcing/test-analysis-framework.git"},
-    "test-handoff": {"path": "test-handoff", "url": "https://github.com/cgvcingcing/test-handoff.git"}
+    "doc2html-skill": {"path": "doc2html-skill", "url": "https://github.com/cgvcingcing/agent-skills.git"},
+    "interaction-flow": {"path": "interaction-flow", "url": "https://github.com/cgvcingcing/agent-skills.git"},
+    "spec2testplan-skill": {"path": "spec2testplan-skill", "url": "https://github.com/cgvcingcing/agent-skills.git"},
+    "test-analysis-framework": {"path": "test-analysis-framework", "url": "https://github.com/cgvcingcing/agent-skills.git"},
+    "test-handoff": {"path": "test-handoff", "url": "https://github.com/cgvcingcing/agent-skills.git"}
   },
   "platforms": {
     "codex": {"default_root": "~/.codex", "environment": "CODEX_HOME"},
