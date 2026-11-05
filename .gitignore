@@ -1,0 +1,13 @@
+# Local state and generated runtime files
+.state/
+__pycache__/
+*.py[cod]
+.venv/
+.DS_Store
+.idea/
+.vscode/
+**/_vendor/
+
+# Business inputs, reports, and scratch files belong outside the source tree
+**/workspace/
+**/tmp/

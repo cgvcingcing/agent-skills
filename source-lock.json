@@ -1,0 +1,416 @@
+{
+  "created_at": "2026-11-05T07:03:47.970496+00:00",
+  "source": "Current local skill sources, including uncommitted changes",
+  "repositories": {
+    "doc2html-skill": {
+      "head": "23953aa2aeea55a5e88438ac23207d742725eb06",
+      "remote": "https://github.com/cgvcingcing/doc2html-skill.git",
+      "files": {
+        ".gitignore": {
+          "sha256": "3c285ad59e0b8687ccdbac2a9bd8246477bc72524b6eb5ed483283a94b4122b0",
+          "bytes": 147
+        },
+        "AGENTS.md": {
+          "sha256": "15b45ba7f2007425378a4771c5ac4ecb3c1d0343b2c48a15b57962feb03afb83",
+          "bytes": 4655
+        },
+        "PROTOCOL.md": {
+          "sha256": "30cb541b617f7764bc58fc0c6f8ecb89c945bf505eec30668705711910fb8371",
+          "bytes": 6303
+        },
+        "README.md": {
+          "sha256": "f61caeb9367dabdafcd80144f40deb3cef548b5d71e424468382cccfa98ec53b",
+          "bytes": 2377
+        },
+        "SKILL.md": {
+          "sha256": "1f50a6df0d86d5784a35b4c11b511de4db4b34cf3dfd0df23d1faa7c955380eb",
+          "bytes": 6639
+        },
+        "install.sh": {
+          "sha256": "bd57ac6e47cb8f7d331ac9c005c13fce9477dfdd85a9012bcf2f1009e277638b",
+          "bytes": 3156
+        },
+        "codex/doc-to-html.prompt.md": {
+          "sha256": "7406bf38865bcd6a1a026d50949b5c1d4ef1f36c2bde80bfd2f2c2f80bde6a0b",
+          "bytes": 4445
+        },
+        "references/style-guide.md": {
+          "sha256": "81bb75cc51898be10dfcfdfa3b73362da6c71af5eded0c9444db50d7a13468f3",
+          "bytes": 2995
+        },
+        "samples/demo.png": {
+          "sha256": "0d835f8d2bc0556fb25e7a155ce30f2b9e2139234637c2cb3ef5690be3cbc687",
+          "bytes": 2580
+        },
+        "samples/sample.html": {
+          "sha256": "8523f352d93ba3f9ad98de55bf36c8129d4f1cbc01542e063615934d34b46196",
+          "bytes": 22040
+        },
+        "samples/sample.md": {
+          "sha256": "61aa68b4f4814dc22580a63e3c1a51ea3625bc3df8ae43bc67536f1bdaa28f78",
+          "bytes": 4255
+        },
+        "scripts/md2html.py": {
+          "sha256": "db2765299fd1e34b916da31c3cfce12c9472e651870842a2ac1148a0d77483a1",
+          "bytes": 40398
+        },
+        "scripts/update_codex_agents.py": {
+          "sha256": "e2d68d7cf2c4613cde4291df50a3278284963d13762d16709202511192b35146",
+          "bytes": 3045
+        },
+        "tests/test_cleanup.py": {
+          "sha256": "2dafa133256036d61fa13b0a543c9e314da51ba7cf6cad6b66a67a61e7cc7065",
+          "bytes": 5822
+        },
+        "tests/test_codex_agents.py": {
+          "sha256": "0551a8935bde591e769968f67315d073ea1d8d186c94c84116535ffce8284498",
+          "bytes": 3001
+        },
+        "tests/test_image_viewer.py": {
+          "sha256": "ba2d51c57fc1e9d4227ff8d98316805f8d276ba99a651f2e6ac469eda0c47c52",
+          "bytes": 9462
+        },
+        "tests/test_images.py": {
+          "sha256": "9423cbdb09719838660b9c001a9b81fe424ddcac9319388f749849b9c2cd89e4",
+          "bytes": 2440
+        }
+      },
+      "archive_sha256": "37a118d7144ae001dbfe9875f77daa64f37b14b8f644cdf5788b1afa552c35b9",
+      "included_uncommitted_files": [],
+      "working_tree_dirty": true
+    },
+    "interaction-flow": {
+      "head": "882375ded7107be44b0a5e9f308d6d685e8ba97a",
+      "remote": "https://github.com/cgvcingcing/interaction-flow.git",
+      "files": {
+        ".gitignore": {
+          "sha256": "142d4f46685d51228c4da140bbba6f132b732f123a8403632c064a49f329dbf8",
+          "bytes": 40
+        },
+        "PROTOCOL.md": {
+          "sha256": "768c4ac2d986dd575968d9a0899470ae682dc9c1101a00a241f675e9fce5e5cd",
+          "bytes": 3556
+        },
+        "README.md": {
+          "sha256": "2261ac4996efc8aea0e615b9f01e0ac7aef0fb845ec7936508ebb677bb520e4a",
+          "bytes": 4737
+        },
+        "SKILL.md": {
+          "sha256": "74c6e90b7b09222927d23faf3d0b09a83c3c3614555258e56d3c9c6ffe6a7c9a",
+          "bytes": 9032
+        },
+        "install.sh": {
+          "sha256": "007ba18406997482918e65fd8e290098464f79eb2caa2add7e1e7bc6ba13fff5",
+          "bytes": 256
+        },
+        "agents/openai.yaml": {
+          "sha256": "0b8b7837073c84c20dcfce6e7e68d65ffc5debea069426f7a1441fc5ebe84294",
+          "bytes": 409
+        },
+        "assets/output-template.md": {
+          "sha256": "ee14cfd87be793242f276b5a993cb7fedd692ebe95fc23016f64ccb0de461167",
+          "bytes": 1414
+        },
+        "references/flow-model.md": {
+          "sha256": "bda65e44a84b82c3d9e74ee8544392aff4d7c59c4e77c26bf1ad1324a07629d7",
+          "bytes": 7037
+        },
+        "scripts/install_skill.py": {
+          "sha256": "35fadce67c74ec7af6f60979ff9e29462b8e8ffa44e7132abaeb92ab044953a3",
+          "bytes": 4579
+        },
+        "scripts/render_flow.py": {
+          "sha256": "317000a7c78c9d6b1a9081dd2183d22494846dd56cab8383c8bf164f13b4b3e0",
+          "bytes": 16030
+        },
+        "tests/test_install.py": {
+          "sha256": "fb23cbd721c6b8cda6b0c81712fd5c1c97eca6375df72b0e947977ebc23f1735",
+          "bytes": 6662
+        }
+      },
+      "archive_sha256": "6ce830f08de062f6efc3612dc7f53e4997b2b268872ab4880ea056c411ced655",
+      "included_uncommitted_files": [],
+      "working_tree_dirty": false
+    },
+    "spec2testplan-skill": {
+      "head": "29de392b25c18573144266dfcf42c92e0749db90",
+      "remote": "https://github.com/cgvcingcing/spec2testplan-skill.git",
+      "files": {
+        ".gitignore": {
+          "sha256": "51061890c604f3fffe741cff570e5a4cca82b0b19ca9c15a107910b0ff451426",
+          "bytes": 50
+        },
+        "AGENTS.md": {
+          "sha256": "9823a7d692d0307012fbe34869c1c73af1a446c8c22992debe853d9452b1d49e",
+          "bytes": 1744
+        },
+        "README.md": {
+          "sha256": "27497234ab1de5bc17d1cb0dfa802dcfc698a00819f57cb0d631d4ddb41e94fb",
+          "bytes": 7887
+        },
+        "SKILL.md": {
+          "sha256": "e48f2a60ae99bfb63281ac1eac2bd88088bebcd668ff0ddb7ce1bac22d7f130f",
+          "bytes": 9302
+        },
+        "install.sh": {
+          "sha256": "28f7b54948e86610235802a30140e11bd1c019ce5e56d45b317f3326c98f4832",
+          "bytes": 139
+        },
+        "agents/openai.yaml": {
+          "sha256": "50bcc5e77ccd2b87788ba6a1931c07436dc3e04fc0963b87735e24d2bb552708",
+          "bytes": 398
+        },
+        "examples/sample.md": {
+          "sha256": "8c5228d3a4c05efa1dc4d5f90257e9e766faad27c8dde741f72a3af63826397e",
+          "bytes": 1073
+        },
+        "examples/sample.testplan.html": {
+          "sha256": "65dfd764291e7f94f81254ef2e9bf85364a6778c6fa2be6b7797ca01366a8b6d",
+          "bytes": 68430
+        },
+        "examples/fixtures/sample.sources.json": {
+          "sha256": "534371a276451a1f5deb1162025c44628dcd72801ffbdd9faee420fcbb304b7d",
+          "bytes": 4248
+        },
+        "examples/fixtures/sample.testplan.json": {
+          "sha256": "5dbac6be03851760ee3bb3596ccf875012d2d1b39161ab9c4ef1c857c0eccb97",
+          "bytes": 23291
+        },
+        "references/output-contract.md": {
+          "sha256": "a057b6a89e7b5a41a1da8f4025c50ebe5a37652276da821b95571875b7ea9a71",
+          "bytes": 9125
+        },
+        "scripts/install.py": {
+          "sha256": "39ebd5457b99e72fc6d6ab9a40cb3e6227775b4245548479ce47520eec2db7e3",
+          "bytes": 5051
+        },
+        "scripts/plan_view.py": {
+          "sha256": "0b40f48e37e6394d9eaf9882d7fb2e925e7694768d35c19e0f50cf3bf4cdf9da",
+          "bytes": 12564
+        },
+        "scripts/spec2testplan.py": {
+          "sha256": "0950c850d4b5a35bf2dbefef2cfd28d6c3d0cf73fa1738780c782a0f56fd66c1",
+          "bytes": 3789
+        },
+        "scripts/spec_plan.py": {
+          "sha256": "2fc77dc6747ca263d90105f1def350443d647f486ec6602f89e0e26ef2ad07ae",
+          "bytes": 22769
+        },
+        "scripts/spec_sources.py": {
+          "sha256": "0a955afc19dc8b2cf55b986cbb7f8efdfb5f195826f4bfe7c7339c272a3df946",
+          "bytes": 13035
+        },
+        "tests/test_spec2testplan.py": {
+          "sha256": "0019c0d3e4811ba4e36e83088ecf55aca96128eacc94c7ac043a6d0f229b8466",
+          "bytes": 28892
+        }
+      },
+      "archive_sha256": "94ae494842dbea4e51b6479edaa02b1a792586d843e2ad333a128de75bd77699",
+      "included_uncommitted_files": [
+        ".gitignore"
+      ],
+      "working_tree_dirty": true
+    },
+    "test-analysis-framework": {
+      "head": "7ca5db3246e5ee28650927f65c4ae0dcbc68aac0",
+      "remote": "https://github.com/cgvcingcing/test-analysis-framework.git",
+      "files": {
+        ".gitignore": {
+          "sha256": "ead0402bbcc895ff6b84d03ec2ebd3ba023bb3aeafad95aab0d7c2ba345504ec",
+          "bytes": 570
+        },
+        "CLEAN_USAGE.md": {
+          "sha256": "d4f2723a4c70b49f685db5824c3197c63db9fe17b092c8e5db70421c81fa2b33",
+          "bytes": 2895
+        },
+        "README.md": {
+          "sha256": "2987bf95f37e9913e5e7ea43f81f67af5e5f3eead9443e086b7b2404f88db6d1",
+          "bytes": 3300
+        },
+        "clean.sh": {
+          "sha256": "84c975bbb772f10ed6a51756d9f837a985f92a7fc97882271f631fc41722ff33",
+          "bytes": 6319
+        },
+        "scripts/install_codex_skills.sh": {
+          "sha256": "7d8f5c04dfeacc2a0932270e091f005a08a32b7bea10e4d8927f9870f69a4c66",
+          "bytes": 579
+        },
+        "scripts/xmind_generator.py": {
+          "sha256": "1ad57108f400b516e2ae502213166828ff6dd4a7d4f05e58ce34ef4975708e61",
+          "bytes": 7389
+        },
+        "skill-extract-test-points/SKILL.md": {
+          "sha256": "06f2afb26cf8ce7a49270ce063541dcca10fd48080d5c4aee0df2d420792e8f6",
+          "bytes": 10352
+        },
+        "skill-extract-test-points/agents/openai.yaml": {
+          "sha256": "93be980dda0fa95f70326a0d06de4ada9ffe36d866b61437b2db6cfd4cc392bc",
+          "bytes": 254
+        },
+        "skill-extract-test-points/references/diagram-templates.md": {
+          "sha256": "bcbf03cbd4ecca54db739dadc0a639e3a8b623985dfdbeb53220866ec5e2ea17",
+          "bytes": 9358
+        },
+        "skill-extract-test-points/references/extraction-dimensions.md": {
+          "sha256": "da681c9e436d921aba8051aa67b28f82a8af35f3a257fa2d71a2ad73fc271ff8",
+          "bytes": 11650
+        },
+        "skill-extract-test-points/references/output-schema.md": {
+          "sha256": "a1846da3a429c5ed3a842cd7f761d1419b53f5501e8def93eae15be2e605ba3e",
+          "bytes": 781
+        },
+        "skill-extract-test-points/references/output-template.md": {
+          "sha256": "7eac9ba98ac02fb9ce6c8876df17a21b6b539a2f9fc137f1fc7cc57ce29b91cb",
+          "bytes": 226
+        },
+        "skill-extract-test-points/references/requirement-parsing.md": {
+          "sha256": "13e4eb3720fb07bb9f71c730b21728b7f7207e528adc77d45efc52204d8547e4",
+          "bytes": 9175
+        },
+        "skill-extract-test-points/scripts/diagram_generator.py": {
+          "sha256": "3134a888ded1944e835a69ce166ea6acaa1609e7476ff9c227548011699bbea7",
+          "bytes": 14078
+        },
+        "skill-extract-test-points/scripts/testpoint_formatter.py": {
+          "sha256": "b51f8694e30f80c9d9bb323c95ad7f3805cfeef55365d00a3a288025b93af446",
+          "bytes": 2212
+        },
+        "skill-generate-test-cases/SKILL.md": {
+          "sha256": "39d197699622b717793100d05def4c938d3066148a0068aba572f847e4bc54d1",
+          "bytes": 14264
+        },
+        "skill-generate-test-cases/agents/openai.yaml": {
+          "sha256": "0c2cb60c65d2ba37426fa1a1d3a30ea65bfe774bd1d41fbc7b8b0130d02b91a1",
+          "bytes": 274
+        },
+        "skill-generate-test-cases/references/case-writing-standards.md": {
+          "sha256": "f45045ddfa1174573fc31f83b2cb16bd71429f084bb82ee23babeabce7924b62",
+          "bytes": 8610
+        },
+        "skill-generate-test-cases/references/priority-rules.md": {
+          "sha256": "e1f8a35b165acf66319c07092641b36b5ed1c4d62fe20799703569a723f91e01",
+          "bytes": 536
+        },
+        "skill-generate-test-cases/references/test-case-schema.md": {
+          "sha256": "0a26ce4db5a80608b3a03ba4d4cb4bc105514af7e22a56c38b4e55bf50ea59ab",
+          "bytes": 1069
+        },
+        "skill-generate-test-cases/references/test-design-methods.md": {
+          "sha256": "885de31d91a095a09a5b61d9a7afa9d3969229e98427ba4f98904e1b2ed02f8e",
+          "bytes": 11048
+        },
+        "skill-generate-test-cases/scripts/coverage_analyzer.py": {
+          "sha256": "b48fbe6651da2b03ff3421513ebcb275ddad634c4ed6f3870f5eb44391c5d019",
+          "bytes": 9000
+        },
+        "skill-generate-test-cases/scripts/xmind_generator.py": {
+          "sha256": "1ad57108f400b516e2ae502213166828ff6dd4a7d4f05e58ce34ef4975708e61",
+          "bytes": 7389
+        }
+      },
+      "archive_sha256": "1e0559a24b4201db78ed9e1dbcd8d744d1c54f314ca20edf98b2ce0429d6dc1d",
+      "included_uncommitted_files": [
+        ".gitignore",
+        "CLEAN_USAGE.md",
+        "README.md",
+        "clean.sh",
+        "scripts/install_codex_skills.sh",
+        "scripts/xmind_generator.py",
+        "skill-extract-test-points/SKILL.md",
+        "skill-extract-test-points/agents/openai.yaml",
+        "skill-extract-test-points/references/output-schema.md",
+        "skill-extract-test-points/references/output-template.md",
+        "skill-extract-test-points/scripts/diagram_generator.py",
+        "skill-extract-test-points/scripts/testpoint_formatter.py",
+        "skill-generate-test-cases/SKILL.md",
+        "skill-generate-test-cases/agents/openai.yaml",
+        "skill-generate-test-cases/references/priority-rules.md",
+        "skill-generate-test-cases/references/test-case-schema.md",
+        "skill-generate-test-cases/references/test-design-methods.md",
+        "skill-generate-test-cases/scripts/coverage_analyzer.py",
+        "skill-generate-test-cases/scripts/xmind_generator.py"
+      ],
+      "working_tree_dirty": true
+    },
+    "test-handoff": {
+      "head": "4299715b66e0a2d4666e3c9fdd8cb80aa2a7daac",
+      "remote": "https://github.com/cgvcingcing/test-handoff.git",
+      "files": {
+        ".gitignore": {
+          "sha256": "db7b851e268e37aae70b7e12d098990d404ec89cacd0db75779d3c809ba9203c",
+          "bytes": 56
+        },
+        "README.md": {
+          "sha256": "88965669ea1ce1eccbce9a629ea6a7033f46b63061015c18b9b62f23d3a67dc5",
+          "bytes": 5384
+        },
+        "SKILL.md": {
+          "sha256": "e2253efb6bd90444e27c15af48a0a28687a820b6ac31c32675034ba7ab0551e7",
+          "bytes": 10242
+        },
+        "install.py": {
+          "sha256": "b14ab88a69afa917c04091b8c2a7c2e5b63fa87e384cf2454d5123039529ea2a",
+          "bytes": 2983
+        },
+        "agents/openai.yaml": {
+          "sha256": "709ad8f26e7665e8bf0bfc0d73b9ca23ddfd24f719aead57ddc24e01699db974",
+          "bytes": 296
+        },
+        "assets/form.css": {
+          "sha256": "17d1017c390f06ce0f2c8196f98c19851b8026ccabe10c0752765a9008efc05c",
+          "bytes": 16415
+        },
+        "assets/form.html": {
+          "sha256": "70b3ed495487e056e8d4b86aee34d5b5e4bc0d9342970f2a1a0d9271129f50e2",
+          "bytes": 3331
+        },
+        "assets/form.js": {
+          "sha256": "088756cba48a69ff640ddbf879b0c4ce2b85dad8ef1b937912bded468449e8e1",
+          "bytes": 61355
+        },
+        "assets/form.schema.json": {
+          "sha256": "9c499db03b088d44ae443ba37d028954ec5346d2c453032e084a444df2f48877",
+          "bytes": 7374
+        },
+        "assets/hierarchy.css": {
+          "sha256": "1ec00071f70b1afe7e97db9765bc2fc741776de129c5a976811de269723e38af",
+          "bytes": 19071
+        },
+        "examples/handoff.json": {
+          "sha256": "46ecd4d679d54aaba0387f6a52ac7522030bf4671ccf399f028ab7e31b51c118",
+          "bytes": 1535
+        },
+        "references/form-data.md": {
+          "sha256": "f5ca2123632f63c2a2f003364f07931ae613825f82a86bbdd728b971ade55283",
+          "bytes": 7807
+        },
+        "scripts/render_form.py": {
+          "sha256": "1cac6477e1720a4f880e4d3325ffb9392aa9d3834a5cc1d4e67d37eeb37a951c",
+          "bytes": 15274
+        },
+        "tests/test_render.py": {
+          "sha256": "15de828a715a84ed62d74839c53122cfb8fb16fb4d36fb5157f8f10c45c99f92",
+          "bytes": 7435
+        }
+      },
+      "archive_sha256": "f951462c44e27a35881361fb2937f1b4d6c4d36c5036e9348d971d38a09465f5",
+      "included_uncommitted_files": [],
+      "working_tree_dirty": false
+    }
+  },
+  "management_files": {
+    "manage.py": "3fdd9a3edb0315cc0998ba0e35845a6f20f94b213f04e7ad4a3dc104467519d0",
+    "skills.json": "83f49dadfe592b15ca80b63871eb270895d9a7d78cad9973ea1c667076943055",
+    "README.md": "b117df43079aa531bfa3d66605b7f94aa03f50760b6b4566dfe138cd51656dbc",
+    "AGENTS.md": "b2512becc4bc0d99dba2fac72bef6e0f83dd88c760942719c849876f6c82fe0d",
+    "tests/test_manage.py": "9c9593bf656f0e3ce07fa1302fdb72134217791b09da6f344be15ec9a2d9577d"
+  },
+  "layout": "monorepo",
+  "excluded_categories": [
+    "Git metadata",
+    "IDE settings",
+    "business workspaces",
+    "temporary files",
+    "runtime caches"
+  ]
+}

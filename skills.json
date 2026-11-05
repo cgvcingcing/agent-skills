@@ -1,0 +1,69 @@
+{
+  "schema_version": 1,
+  "repositories": {
+    "doc2html-skill": {"path": "doc2html-skill", "url": "https://github.com/cgvcingcing/doc2html-skill.git"},
+    "interaction-flow": {"path": "interaction-flow", "url": "https://github.com/cgvcingcing/interaction-flow.git"},
+    "spec2testplan-skill": {"path": "spec2testplan-skill", "url": "https://github.com/cgvcingcing/spec2testplan-skill.git"},
+    "test-analysis-framework": {"path": "test-analysis-framework", "url": "https://github.com/cgvcingcing/test-analysis-framework.git"},
+    "test-handoff": {"path": "test-handoff", "url": "https://github.com/cgvcingcing/test-handoff.git"}
+  },
+  "platforms": {
+    "codex": {"default_root": "~/.codex", "environment": "CODEX_HOME"},
+    "claude": {"default_root": "~/.claude", "environment": "CLAUDE_CONFIG_DIR"},
+    "zcode": {"default_root": "~/.zcode"}
+  },
+  "skills": {
+    "doc-to-html": {
+      "repository": "doc2html-skill",
+      "source": ".",
+      "platforms": ["codex", "claude", "zcode"],
+      "resources": [
+        "SKILL.md", "PROTOCOL.md", "scripts/md2html.py",
+        {"source": "references/style-guide.md", "target": "style-guide.md"}
+      ],
+      "runtime_cache": "scripts/_vendor",
+      "codex_legacy": true
+    },
+    "interaction-flow": {
+      "repository": "interaction-flow",
+      "source": ".",
+      "platforms": ["codex", "claude"],
+      "resources": [
+        "SKILL.md", "scripts/render_flow.py", "references/flow-model.md", "assets/output-template.md",
+        {"source": "agents/openai.yaml", "target": "agents/openai.yaml", "platforms": ["codex"]}
+      ]
+    },
+    "spec2testplan": {
+      "repository": "spec2testplan-skill",
+      "source": ".",
+      "platforms": ["codex", "claude"],
+      "resources": [
+        "SKILL.md", "agents/openai.yaml", "references/output-contract.md",
+        "scripts/spec2testplan.py", "scripts/spec_sources.py", "scripts/spec_plan.py", "scripts/plan_view.py"
+      ],
+      "dependencies": [{"name": "doc-to-html", "kind": "recommended", "reason": "default HTML output"}],
+      "compatibility_marker": {
+        "path": ".spec2testplan-install.json", "version_file": "scripts/install.py", "version_constant": "VERSION", "file_hashes": true
+      }
+    },
+    "extract-test-points": {
+      "repository": "test-analysis-framework",
+      "source": "skill-extract-test-points",
+      "platforms": ["codex"],
+      "resources": ["SKILL.md", "agents", "references", "scripts"]
+    },
+    "generate-test-cases": {
+      "repository": "test-analysis-framework",
+      "source": "skill-generate-test-cases",
+      "platforms": ["codex"],
+      "resources": ["SKILL.md", "agents", "references", "scripts"]
+    },
+    "test-handoff": {
+      "repository": "test-handoff",
+      "source": ".",
+      "platforms": ["codex", "claude"],
+      "resources": ["SKILL.md", "agents", "scripts", "references", "assets", "examples"],
+      "compatibility_marker": {"path": ".test-handoff-install.json", "installer": "test-handoff", "version": 1}
+    }
+  }
+}

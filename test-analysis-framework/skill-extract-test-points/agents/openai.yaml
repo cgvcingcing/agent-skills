@@ -1,0 +1,7 @@
+interface:
+  display_name: "提炼测试点"
+  short_description: "从需求材料提取可追溯测试点"
+  default_prompt: "使用 $extract-test-points 从需求材料提取测试点并生成评审报告。"
+
+policy:
+  allow_implicit_invocation: true

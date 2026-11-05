@@ -1,0 +1,4 @@
+interface:
+  display_name: "交互闭环解读"
+  short_description: "按目的梳理业务流程、模块联动或数据交互，只交付一份离线 HTML"
+  default_prompt: "使用 $interaction-flow，按我的阅读目的确定主线和终点，分开呈现业务流程、模块联动与数据交互，只保留一份含主图、必要说明和来源依据的离线 HTML，验证后清理过程文件。"

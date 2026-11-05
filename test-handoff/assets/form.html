@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="zh-CN" data-read-only="@@READONLY@@">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>@@TITLE@@</title>
+<style id="handoff-style">@@CSS@@</style>
+</head>
+<body>
+<nav class="sidebar" aria-label="章节导航">
+  <div class="side-head"><div class="row"><span class="logo" aria-hidden="true"></span><span><b data-project-title>@@PROJECT@@</b><small>测试交接填写表<br>开发填写 · 测试使用</small></span></div></div>
+  <div id="toc">@@TOC@@</div>
+  <div class="side-foot">按章节查阅，点击记录标题折叠。<br>分享前请保存填写版 HTML。</div>
+</nav>
+<button id="side-toggle" title="收起侧栏" aria-label="收起 / 展开侧栏" aria-expanded="true">‹</button>
+<main class="main"><div class="wrap"><article class="content">
+<header class="page-header"><div class="document-kicker"><span>测试交接填写表</span><span data-document-badge>按材料预填 · 待开发确认</span></div><h1 data-project-title>@@PROJECT@@</h1><p class="intro">开发填写 · 测试使用<span>业务范围、开测条件与排查入口</span></p></header>
+@@TOOLBAR@@
+<noscript><p class="missing-source">请启用浏览器 JavaScript 后填写此表。</p></noscript>
+<details class="fill-note"><summary>填写与分享说明</summary><p>点击已填内容即可编辑，模块和场景可换行逐条填写。不涉及的项目请注明原因。填写内容会暂存在当前浏览器；发给同事时，点击“保存填写版 HTML”。</p></details>
+<details class="metadata" open><summary>基本信息<span class="details-action" aria-hidden="true"></span></summary><div class="meta-grid">@@META@@</div></details>
+<div class="overview" aria-label="填写进度"><div class="overview-title"><b>交接内容</b><div class="overview-actions"><span id="completion">0 / 6 项已确认</span><div class="section-controls" role="group" aria-label="栏目展开与收起"><button type="button" id="expand-all">展开全部章节</button><button type="button" id="collapse-all">收起全部章节</button></div></div></div><div class="section-shortcuts">@@SHORTCUTS@@</div><div class="reading-legend"><b>阅读标记</b><span class="priority-chip priority-p0">P0 / 关键风险</span><span class="priority-chip priority-p1">P1 / 待补充</span><span class="priority-chip priority-p2">P2 / 入口线索</span><span class="priority-chip priority-confirmed">预期 / 已确认</span><span class="legend-hint">“已填”表示有交接内容，测试结论以实际验证为准。</span></div></div>
+@@SECTIONS@@
+<details class="source-details"><summary>材料与填写依据<span class="details-action" aria-hidden="true"></span></summary><div class="sources" data-presentation="sources"></div></details>
+<div id="toast" class="toast" role="status" aria-live="polite" hidden><span></span><button type="button" id="undo-delete" hidden>撤销删除</button></div>
+<div class="foot">Test Handoff · 可离线填写与分享</div>
+</article></div></main>
+<button id="totop" title="回到顶部" aria-label="回到顶部">↑</button>
+<script id="handoff-schema" type="application/json">@@SCHEMA@@</script>
+<script id="handoff-data" type="application/json">@@DATA@@</script>
+<script id="handoff-app">@@APP@@</script>
+</body>
+</html>

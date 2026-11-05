@@ -1,0 +1,277 @@
+{
+  "scope": {
+    "title": "范围与业务场景",
+    "add": "新增测试范围",
+    "columns": [
+      {
+        "key": "range",
+        "title": "测试大范围",
+        "hint": "按业务划分，如结算页运费、优惠券、订单提交",
+        "width": 13,
+        "kind": "area"
+      },
+      {
+        "key": "module",
+        "title": "页面 / 功能模块",
+        "hint": "写测试能找到的页面和操作入口",
+        "width": 15,
+        "kind": "area"
+      },
+      {
+        "key": "scenarios",
+        "title": "要测的业务场景与结果",
+        "hint": "列 2～3 类场景，并说明页面或订单应发生什么变化",
+        "width": 31,
+        "kind": "area"
+      },
+      {
+        "key": "dependencies",
+        "title": "数据 / 配置依赖",
+        "hint": "需要什么商品、规则或专项开关",
+        "width": 18,
+        "kind": "area"
+      },
+      {
+        "key": "handoff",
+        "title": "开发补充",
+        "hint": "本环境的样例入口 / 数据编号 / 对接人",
+        "width": 16,
+        "kind": "area"
+      },
+      {
+        "key": "decision",
+        "title": "本次范围",
+        "hint": "",
+        "width": 10,
+        "kind": "select",
+        "options": [
+          "待确认",
+          "本次必测",
+          "回归检查",
+          "不涉及"
+        ]
+      },
+      {
+        "key": "priority",
+        "title": "优先级",
+        "hint": "按需求与影响确认",
+        "width": 10,
+        "kind": "select",
+        "options": [
+          "待确认",
+          "含 P0",
+          "P0",
+          "P1",
+          "P2"
+        ],
+        "optional": true
+      },
+      {
+        "key": "priorityNote",
+        "title": "优先级依据",
+        "hint": "填写来源、涉及的场景或开发确认结论",
+        "width": 20,
+        "kind": "area",
+        "optional": true
+      }
+    ]
+  },
+  "config": {
+    "title": "开测前的配置",
+    "add": "新增配置",
+    "columns": [
+      {
+        "key": "key",
+        "title": "配置项",
+        "hint": "填写完整配置名及所属服务",
+        "width": 28,
+        "kind": "area"
+      },
+      {
+        "key": "purpose",
+        "title": "什么时候用",
+        "hint": "与哪个业务范围有关，开关影响什么",
+        "width": 20,
+        "kind": "area"
+      },
+      {
+        "key": "reference",
+        "title": "文档参考值",
+        "hint": "区分代码默认值与测试建议值",
+        "width": 15,
+        "kind": "area"
+      },
+      {
+        "key": "actual",
+        "title": "本环境实际值",
+        "hint": "填写环境及每项实际值；不涉及请注明",
+        "width": 17,
+        "kind": "area"
+      },
+      {
+        "key": "operation",
+        "title": "位置 / 生效 / 恢复方法",
+        "hint": "配置平台及 namespace；动态 / 刷新 / 重启；恢复值；操作人",
+        "width": 20,
+        "kind": "area"
+      }
+    ]
+  },
+  "services": {
+    "title": "服务与访问入口",
+    "add": "新增服务 / 依赖",
+    "columns": [
+      {
+        "key": "name",
+        "title": "服务 / 依赖名称",
+        "hint": "填写真实部署服务或前端应用名",
+        "width": 17,
+        "kind": "area"
+      },
+      {
+        "key": "role",
+        "title": "本次负责什么",
+        "hint": "写业务职责和受影响功能",
+        "width": 23,
+        "kind": "area"
+      },
+      {
+        "key": "entry",
+        "title": "已有接口 / 页面入口",
+        "hint": "填写测试能调用或打开的入口",
+        "width": 25,
+        "kind": "area"
+      },
+      {
+        "key": "deployment",
+        "title": "开发填写：部署与访问",
+        "hint": "分支 / 构建版本；环境 / 实例；网关域名 / 前缀；客户端版本要求",
+        "width": 25,
+        "kind": "area"
+      },
+      {
+        "key": "owner",
+        "title": "对接人",
+        "hint": "负责人及可联系的账号",
+        "width": 10,
+        "kind": "area"
+      }
+    ]
+  },
+  "logs": {
+    "title": "日志怎么查",
+    "add": "新增日志线索",
+    "columns": [
+      {
+        "key": "scene",
+        "title": "排查场景",
+        "hint": "写测试遇到什么情况时查这条日志",
+        "width": 15,
+        "kind": "area"
+      },
+      {
+        "key": "keywords",
+        "title": "日志关键词",
+        "hint": "填写可直接搜索的原始关键词",
+        "width": 31,
+        "kind": "area"
+      },
+      {
+        "key": "location",
+        "title": "开发填写：服务 / 日志位置",
+        "hint": "实际输出服务、日志平台、索引或查询入口",
+        "width": 18,
+        "kind": "area"
+      },
+      {
+        "key": "query",
+        "title": "开发填写：查询示例",
+        "hint": "按本平台语法，给出带 traceId / orderCode / 账号的检索条件",
+        "width": 19,
+        "kind": "area"
+      },
+      {
+        "key": "check",
+        "title": "查到后看什么",
+        "hint": "说明正常、失败或回退时如何判断",
+        "width": 17,
+        "kind": "area"
+      }
+    ]
+  },
+  "database": {
+    "title": "数据库和存储查什么",
+    "add": "新增数据关注项",
+    "columns": [
+      {
+        "key": "object",
+        "title": "要核对的数据",
+        "hint": "这里写业务数据类别，不代替真实表名",
+        "width": 16,
+        "kind": "area"
+      },
+      {
+        "key": "storage",
+        "title": "开发填写：真实存储位置",
+        "hint": "所属服务；数据库 / schema / 表名。无落库请写实际查询位置",
+        "width": 22,
+        "kind": "area"
+      },
+      {
+        "key": "lookup",
+        "title": "开发填写：怎么定位",
+        "hint": "关联键、真实字段名、金额单位、写入 / 更新时间；无关联键请说明",
+        "width": 20,
+        "kind": "area"
+      },
+      {
+        "key": "check",
+        "title": "要核对什么",
+        "hint": "操作前后看哪些数据变化，预期应是什么",
+        "width": 21,
+        "kind": "area"
+      },
+      {
+        "key": "query",
+        "title": "开发填写：查询示例",
+        "hint": "基于真实库表的只读 SQL，或可用的查询入口与条件；无落库请说明",
+        "width": 21,
+        "kind": "area"
+      }
+    ]
+  },
+  "samples": {
+    "title": "测试数据与交接事项",
+    "add": "新增数据样例",
+    "columns": [
+      {
+        "key": "scene",
+        "title": "业务样例",
+        "hint": "写一个测试可以实际操作的业务场景",
+        "width": 17,
+        "kind": "area"
+      },
+      {
+        "key": "example",
+        "title": "文档里的样例",
+        "hint": "简要说明商品、规则和金额条件",
+        "width": 31,
+        "kind": "area"
+      },
+      {
+        "key": "expected",
+        "title": "页面 / 订单应看到什么",
+        "hint": "说明可核对的预期结果",
+        "width": 25,
+        "kind": "area"
+      },
+      {
+        "key": "actual",
+        "title": "开发填写：本环境可用数据",
+        "hint": "账号、SKU、模板 / 活动 / 券 ID、有效期、地址、准备方式及负责人",
+        "width": 27,
+        "kind": "area"
+      }
+    ]
+  }
+}

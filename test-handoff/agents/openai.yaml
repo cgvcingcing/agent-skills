@@ -1,0 +1,4 @@
+interface:
+  display_name: "开发提测交接表"
+  short_description: "根据需求生成开发可填写的离线提测交接表，支持编辑、折叠、导入导出与打印"
+  default_prompt: "使用 $test-handoff，根据我的需求生成开发可填写的离线 HTML 提测交接表。"

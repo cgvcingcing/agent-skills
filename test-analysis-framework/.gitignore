@@ -1,0 +1,45 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+build/
+dist/
+*.egg-info/
+
+# 工作目录
+workspace/.memory/*.json
+workspace/input/requirements/*
+workspace/output/*
+!workspace/input/
+!workspace/input/requirements/.gitkeep
+!workspace/output/
+!workspace/output/test-points/
+!workspace/output/test-points/.gitkeep
+!workspace/output/test-cases/
+!workspace/output/test-cases/.gitkeep
+
+# 临时数据
+tmp/*
+!tmp/.gitkeep
+workspace/tmp/*
+!workspace/tmp/.gitkeep
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# 临时文件
+*.tmp
+*.log
