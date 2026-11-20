@@ -9,7 +9,9 @@
 需要 Python 3.10 及以上版本；首次安装 Python 依赖需要 pip 和网络。在本仓库根目录执行：
 
 ```bash
-bash install.sh
+cd ..                       # 技能总仓库根目录
+python3 manage.py sync --platform all
+python3 manage.py check --platform all
 ```
 
 安装后打开新的 agent 会话。Codex 原生入口为 `~/.codex/skills/doc-to-html/`，Claude Code 为 `~/.claude/skills/doc-to-html/`，DSH 为 `${DSH_HOME:-~/.dsh}/skills/doc-to-html/`。Codex 旧提示词入口保留兼容；自定义 `CODEX_HOME` 时，Codex 安装目录跟随该设置。
@@ -48,7 +50,7 @@ python3 ~/.codex/skills/doc-to-html/scripts/md2html.py docs/需求.md
 
 ```bash
 python3 ~/.codex/skills/doc-to-html/scripts/md2html.py --cleanup assembled.md extracts/
-bash install.sh --uninstall
+python3 manage.py restore BACKUP_ID   # 卸载或回滚安装，见总仓库 README
 ```
 
 卸载只移除本项目的安装副本和 Codex 托管入口，保留源项目与其他用户规则。路径布局、CLI 参数和平台适配规则见 [PROTOCOL.md](PROTOCOL.md)。

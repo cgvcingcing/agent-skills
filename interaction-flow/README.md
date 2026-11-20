@@ -10,10 +10,12 @@
 
 需要 Python 3.9 或以上版本，以及 Codex、Claude Code 或 DSH。安装和 SVG 渲染只使用 Python 标准库，不下载依赖。
 
-在本项目目录运行：
+安装由技能总仓库根目录的 `manage.py` 完成（本包不再单独提供安装脚本）：
 
 ```bash
-bash install.sh
+cd ..                       # 技能总仓库根目录
+python3 manage.py sync --platform all
+python3 manage.py check --platform all
 ```
 
 默认安装到各平台的个人技能目录，重复执行会更新本技能的安装副本：
@@ -24,23 +26,16 @@ bash install.sh
 | Claude Code | `~/.claude/skills/interaction-flow/` | `/interaction-flow` |
 | DSH | `${DSH_HOME:-~/.dsh}/skills/interaction-flow/` | `/interaction-flow` |
 
-仅安装一端：
+只装一个技能或一个平台：
 
 ```bash
-bash install.sh --target claude
-bash install.sh --target codex
-bash install.sh --target dsh
+python3 manage.py sync interaction-flow --platform dsh
+python3 manage.py check interaction-flow --platform dsh
 ```
 
-支持 `CODEX_HOME`、`CLAUDE_CONFIG_DIR` 和 `DSH_HOME`。也可以指定配置根目录，脚本会在其下创建 `skills/interaction-flow/`：
+支持 `CODEX_HOME`、`CLAUDE_CONFIG_DIR` 和 `DSH_HOME`；也可用 `--codex-root`、`--claude-root`、`--dsh-root` 指定配置根目录，脚本会在其下创建 `skills/interaction-flow/`。
 
-```bash
-bash install.sh --target claude --claude-home "/path/to/claude-config"
-bash install.sh --target codex --codex-home "/path/to/codex-config"
-bash install.sh --target dsh --dsh-home "/path/to/dsh-home"
-```
-
-源项目与安装副本分开保存。安装器只替换本技能目录，不修改全局 `AGENTS.md`、`CLAUDE.md` 或其他技能；更新前先准备新副本，目录替换失败时恢复旧副本。安装后在新会话中使用。
+源项目与安装副本分开保存。安装器只替换本技能目录，不修改全局 `AGENTS.md`、`CLAUDE.md` 或其他技能；更新前先备份，目录替换失败时整体回滚。安装后在新会话中使用。
 
 ## 使用
 
@@ -69,13 +64,11 @@ interaction-flow/
 ├── SKILL.md                   两端共用的技能入口
 ├── README.md                  安装与使用说明
 ├── PROTOCOL.md                平台路径与安装约定
-├── install.sh                 双端安装入口
 ├── agents/openai.yaml         Codex 界面元数据
 ├── assets/output-template.md  HTML 内容组织模板
 ├── references/flow-model.md   图模型与读图规则
 ├── scripts/render_flow.py     临时 JSON → 待内嵌 SVG
-├── scripts/install_skill.py   安装与更新逻辑
-└── tests/test_install.py      隔离目录中的安装验证
+└── tests/                     渲染器测试
 ```
 
 `agents/openai.yaml` 只安装到 Codex；Claude Code 直接读取共用的 `SKILL.md` 和配套资源。渲染器根据本次加载的技能目录定位，不把机器路径写进技能。
@@ -84,13 +77,12 @@ interaction-flow/
 
 ## 开发与验证
 
-修改源项目后重新执行 `bash install.sh`，让两端使用相同版本的技能内容。不要直接改某个安装副本后把它当作源项目。
+修改源项目后在总仓库根目录重新执行 `python3 manage.py sync`，让各端使用相同版本的技能内容。不要直接改某个安装副本后把它当作源项目。
 
 ```bash
-bash -n install.sh
 python3 -m unittest discover -s tests -v
 ```
 
-测试会在临时目录验证双端安装、单端安装、升级、路径中含空格或中文、配置根目录、源项目保护及已安装渲染器。不会改动实际个人技能目录，也不会调用付费模型服务。
+渲染器测试在临时目录验证渲染结果；安装、升级、路径含空格或中文、配置根目录与回滚由总仓库的 `scripts/check_workspace.py` 在隔离目录中验证，不会改动个人技能目录。
 
 Claude Code 加载规则参考[官方技能文档](https://code.claude.com/docs/en/skills)。平台布局和脚本接口见 [PROTOCOL.md](PROTOCOL.md)。

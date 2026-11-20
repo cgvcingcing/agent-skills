@@ -9,4 +9,5 @@
 - `source-lock.json` records the imported source commits and file hashes, including explicitly included uncommitted changes. It documents the initial import; subsequent changes are tracked by this repository's Git history. Its original URLs are historical records. `source-retirement.json` and `docs/legacy-repositories.md` record the retirement and recovery details.
 - Keep real requirements, customer data, reports, local state, and runtime caches outside Git. Put business inputs and outputs in the business project's working directory.
 - `.state/` contains durable installation backups. Preserve existing backup data unless removing it is part of the user's request.
-- Original standalone installers remain available in each source package. Keep their declared behavior compatible when changing installation resources.
+- `manage.py` is the only installer. The per-package standalone installers were removed deliberately; do not reintroduce one, and do not let a package README advertise its own install script.
+- Installation resources are declared in `skills.json` only: `resources` selects the payload, `runtime_cache` carries auto-generated runtime dependencies, and `warmup` names a converter to run once after staging so those dependencies work offline on a fresh clone.

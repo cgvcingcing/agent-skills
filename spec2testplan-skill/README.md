@@ -8,11 +8,12 @@ Agent 根据 Skill 分析需求，默认调用 `doc-to-html` Skill 生成可离�
 
 ## 安装
 
-要求 Python 3.9+，在项目根目录执行：
+要求 Python 3.9+。安装由技能总仓库根目录的 `manage.py` 完成（本包不再单独提供安装脚本）：
 
 ```bash
-bash install.sh
-bash install.sh --check
+cd ..                       # 技能总仓库根目录
+python3 manage.py sync --platform all
+python3 manage.py check --platform all
 ```
 
 默认安装到：
@@ -23,18 +24,16 @@ bash install.sh --check
 | Claude Code | `${CLAUDE_CONFIG_DIR:-~/.claude}/skills/spec2testplan` | `/spec2testplan` |
 | DSH | `${DSH_HOME:-~/.dsh}/skills/spec2testplan` | `/spec2testplan` |
 
-安装后在新会话中调用。各端使用同一份 `SKILL.md` 和脚本；具体设计文字可能随模型与输入变化。安装器仅管理本技能目录，不修改全局 `AGENTS.md`、`CLAUDE.md` 或其他技能，也不自动安装 `doc-to-html`。
+安装后在新会话中调用。各端使用同一份 `SKILL.md` 和脚本；具体设计文字可能随模型与输入变化。安装器仅管理本技能目录，不修改全局 `AGENTS.md`、`CLAUDE.md` 或其他技能，也不自动安装 `doc-to-html`（它只是推荐依赖）。
 
-可单独选择平台或卸载：
+可单独选择平台，或回滚一次安装：
 
 ```bash
-bash install.sh --target codex
-bash install.sh --target claude
-bash install.sh --target dsh
-bash install.sh --uninstall
+python3 manage.py sync spec2testplan --platform dsh
+python3 manage.py restore BACKUP_ID
 ```
 
-支持 `--codex-root DIR`、`--claude-root DIR`、`--dsh-root DIR` 指定配置根目录。覆盖或卸载仅适用于带本项目管理标记的目录，遇到其他同名目录会报错并保留内容。
+支持 `--codex-root DIR`、`--claude-root DIR`、`--dsh-root DIR` 指定配置根目录。源项目目录与安装副本分开保存，安装前会先备份。
 
 ## 使用
 
@@ -125,10 +124,8 @@ scripts/spec2testplan.py         静态提取、结构校验、Markdown 中间�
 scripts/spec_sources.py          Markdown / HTML 证据解析
 scripts/spec_plan.py             设计校验与文档生成
 scripts/plan_view.py             主线、重点与可展开检查的阅读层
-scripts/install.py              双平台安装、校验与卸载
-install.sh                      安装入口
 examples/                       虚构需求、HTML 示例与校验 fixtures
-tests/                          提取、追溯、渲染和安装回归
+tests/                          提取、追溯和渲染回归
 ```
 
-维护时更新源项目后重新运行安装器。安装包不包含机器特定绝对路径，也不包含示例需求和测试数据。
+维护时更新源项目后在总仓库根目录重新执行 `python3 manage.py sync`。安装包不包含机器特定绝对路径，也不包含示例需求和测试数据。

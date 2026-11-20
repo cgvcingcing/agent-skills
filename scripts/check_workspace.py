@@ -23,6 +23,10 @@ def invoke(arguments, cwd=ROOT):
     return completed
 
 
+def manager_config():
+    return json.loads((ROOT / 'skills.json').read_text(encoding='utf-8'))['skills']
+
+
 def check_installations():
     with tempfile.TemporaryDirectory(prefix='agent-skills-check-') as directory:
         scratch = Path(directory)
@@ -61,8 +65,13 @@ def check_installations():
         with zipfile.ZipFile(xmind) as archive:
             if archive.testzip() is not None or b'TC-SMOKE-001' not in archive.read('content.xml'):
                 raise ValueError('Generated XMind content is invalid or missing traceability')
+        warmed = {name: skill for name, skill in manager_config().items() if skill.get('warmup')}
+        for name, skill in warmed.items():
+            cache = roots['codex'] / 'skills' / name / skill['runtime_cache']
+            if not cache.is_dir() or not any(cache.iterdir()):
+                raise ValueError(f'Runtime cache was not warmed during installation: {cache}')
         return {'installations': len(checked['installations']), 'helpers': len(helpers),
-                'idempotent': True, 'xmind_generated': True,
+                'idempotent': True, 'xmind_generated': True, 'warmed': len(warmed),
                 'backup_created': bool(result['backup_id'])}
 
 

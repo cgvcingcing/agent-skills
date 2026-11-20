@@ -53,14 +53,18 @@ test-analysis-framework/
 
 ### 在 Codex 或 DSH 中安装
 
-把两个 skill 目录复制到 agent 的 skill 目录（`CODEX_HOME` 未设置时使用 `~/.codex/skills`）：
+安装由技能总仓库根目录的 `manage.py` 完成（本包不再单独提供安装脚本），会复制 `SKILL.md`、`agents`、`references` 与 `scripts`：
 
 ```bash
-./scripts/install_codex_skills.sh                 # Codex
-./scripts/install_codex_skills.sh --platform dsh  # DSH（DSH_HOME 未设置时使用 ~/.dsh）
+cd ..                       # 技能总仓库根目录
+python3 manage.py sync --platform codex
+python3 manage.py sync --platform dsh
+python3 manage.py check --platform dsh
 ```
 
-重新打开会话后，可以显式调用 `$extract-test-points` 或 `$generate-test-cases`（DSH 用 `/extract-test-points`、`/generate-test-cases`），也可以使用“提炼测试点”“生成测试用例”等自然语言触发。两个目录里的 `agents/openai.yaml` 提供 Codex 界面的名称和默认提示词。
+安装后在新会话中可显式调用 `$extract-test-points` 或 `$generate-test-cases`（DSH 用 `/extract-test-points`、`/generate-test-cases`），也可以使用“提炼测试点”“生成测试用例”等自然语言触发。两个目录里的 `agents/openai.yaml` 提供 Codex 界面的名称和默认提示词。
+
+也可以完全不用安装器：这两个技能目录本身就是可直接使用的 bundle，复制目录到 `~/.dsh/skills/` 或 `~/.codex/skills/` 即可被发现。
 
 ### 1. 提炼测试点
 

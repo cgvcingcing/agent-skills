@@ -16,7 +16,7 @@
 - 项目可放在任意目录。安装器以自身所在项目为源，不依赖调用时的工作目录。
 - 运行时以已加载 `SKILL.md` 的父目录定位配套资源。用户需求与最终 HTML 的相对路径按业务项目当前目录解析；图源和其他过程文件使用本轮任务的专用临时目录。
 - 技能及脚本不写入机器用户名或项目绝对路径。交付时可展示实际生成路径。
-- `bash install.sh` 默认安装两端；`--target codex` 或 `--target claude` 只安装指定平台。
+- 安装由总仓库根目录的 `python3 manage.py sync` 完成；`--platform codex`、`--platform claude` 或 `--platform dsh` 只安装指定平台。
 - 安装器只复制 `SKILL.md`、`scripts/render_flow.py`、`references/flow-model.md`、`assets/output-template.md`；Codex 额外复制 `agents/openai.yaml`。本约定、README、安装器和测试留在源项目。
 - 更新以完整新副本替换本技能的旧目录，避免残留过期资源。只更新声明 `name: interaction-flow` 的现有安装；源项目、非本技能目录和目录符号链接不作为替换目标。
 - 安装不触碰需求原材料、历史交付、其他技能或全局 agent 配置。

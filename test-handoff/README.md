@@ -14,22 +14,20 @@
 
 ## 安装
 
-需要 Python 3，无第三方运行依赖。在项目目录执行：
+需要 Python 3，无第三方运行依赖。安装由技能总仓库根目录的 `manage.py` 完成（本包不再单独提供安装脚本）：
 
 ```bash
-python3 install.py
+cd ..                       # 技能总仓库根目录
+python3 manage.py sync --platform all
+python3 manage.py check --platform all
 ```
 
 默认安装到 `~/.claude/skills/test-handoff`、`${CODEX_HOME:-~/.codex}/skills/test-handoff` 和 `${DSH_HOME:-~/.dsh}/skills/test-handoff`。安装副本包含同一套技能正文、脚本和模板。安装器仅更新自己管理的目录，不修改全局配置。
 
 ```bash
-python3 install.py --platform codex
-python3 install.py --platform claude
-python3 install.py --platform dsh
-python3 install.py --uninstall
+python3 manage.py sync test-handoff --platform dsh   # 只装一端
+python3 manage.py restore BACKUP_ID                  # 回滚一次安装
 ```
-
-`--platform` 沿用旧的 `both` 取值（等价于 Codex + Claude Code）；不传时安装全部三端。
 
 ## 使用
 

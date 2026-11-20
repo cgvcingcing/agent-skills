@@ -13,7 +13,6 @@ doc2html-skill/
 ├── SKILL.md                        # 技能定义（各平台原生 skill 共用，逐字相同）
 ├── PROTOCOL.md                     # 平台适配契约：目录映射、路径规则、发现顺序、CLI 稳定接口
 ├── AGENTS.md                       # 本文件：任意 agent 进入本仓库时的说明
-├── install.sh                      # 一键安装各平台；--uninstall 卸载
 ├── scripts/
 │   ├── md2html.py                  # 核心转换器（依赖自举到 scripts/_vendor）
 │   ├── update_codex_agents.py      # 维护 Codex 托管入口，保留其他用户规则
@@ -29,8 +28,9 @@ doc2html-skill/
 ## 安装与卸载
 
 ```bash
-bash install.sh             # 在项目根目录执行，各平台全装
-bash install.sh --uninstall # 卸载（源项目保留）
+cd ..                       # 技能总仓库根目录
+python3 manage.py sync      # 安装到所有平台
+python3 manage.py check     # 校验安装副本与源码一致
 ```
 
 安装副本位置（契约，见 PROTOCOL.md §1）：
@@ -47,7 +47,7 @@ bash install.sh --uninstall # 卸载（源项目保留）
 
 ## 硬规则：零机器绝对路径
 
-**任何安装到平台目录的文件，禁止写入机器特定绝对路径**（PROTOCOL.md §2）。路径只允许两种写法：相对本文件定位，或 `~` 开头的用户级路径。agent 运行时按 PROTOCOL.md §3 的发现顺序定位脚本。修改 skill 内容时请遵守该规则并同步各端，再重跑 `install.sh`。
+**任何安装到平台目录的文件，禁止写入机器特定绝对路径**（PROTOCOL.md §2）。路径只允许两种写法：相对本文件定位，或 `~` 开头的用户级路径。agent 运行时按 PROTOCOL.md §3 的发现顺序定位脚本。修改 skill 内容时请遵守该规则并同步各端，再重跑 `python3 manage.py sync`。
 
 ## 直接用命令行（不经过任何 agent）
 
@@ -72,5 +72,5 @@ CLI 参数是稳定契约（PROTOCOL.md §4），只能向后兼容地新增。
 ## 维护说明
 
 - 修改排版风格：编辑 `scripts/md2html.py` 内嵌的 `CSS` 模板（占位符 `__ACCENT__` 为主题色）。
-- 修改 skill 内容：同步改 `SKILL.md` 与 `codex/doc-to-html.prompt.md`（语义一致），然后重跑 `install.sh`（先清理旧安装副本再部署新版，无残留）。
-- 协议变更：更新 `PROTOCOL.md` 版本号，并检查 `install.sh` 与两份指令文件的一致性。
+- 修改 skill 内容：同步改 `SKILL.md` 与 `codex/doc-to-html.prompt.md`（语义一致），然后在总仓库根目录重跑 `python3 manage.py sync`（整目录替换，无历史残留）。
+- 协议变更：更新 `PROTOCOL.md` 版本号，并检查两份指令文件与 `skills.json` 资源清单的一致性。

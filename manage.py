@@ -218,8 +218,7 @@ class Workspace:
         return self.roots[platform] / 'skills' / name
 
     def ignored_markers(self, name):
-        marker = self.skills[name].get('compatibility_marker', {})
-        return {RECEIPT, marker.get('path', '')}
+        return {RECEIPT}
 
     def legacy_status(self, name, platform):
         if platform != 'codex' or not self.skills[name].get('codex_legacy'):
@@ -304,25 +303,23 @@ class Workspace:
         if name and target.exists() and (not target.is_dir() or skill_name(target) != name):
             raise ValueError(f'Existing destination is not the expected skill {name}: {target}')
 
-    def marker(self, name, files):
-        definition = self.skills[name].get('compatibility_marker')
+    def warmup(self, name, stage):
+        """Run the skill's own converter once so its runtime cache works offline."""
+        definition = self.skills[name].get('warmup')
         if not definition:
             return None
-        version = definition.get('version')
-        if 'version_file' in definition:
-            tree = ast.parse((self.source(name) / relative_path(definition['version_file'])).read_text())
-            for node in tree.body:
-                if isinstance(node, ast.Assign) and any(isinstance(target, ast.Name) and target.id == definition['version_constant'] for target in node.targets):
-                    version = ast.literal_eval(node.value)
-                    break
-            if version is None:
-                raise ValueError(f'Cannot read installer version for {name}')
-        record = {'name': name, 'version': version}
-        if definition.get('installer'):
-            record.update(installer=definition['installer'], installedAt=timestamp())
-        if definition.get('file_hashes'):
-            record['files'] = files
-        return definition['path'], record
+        script = stage / relative_path(definition['script'])
+        sample = self.source(name) / relative_path(definition['sample'])
+        if not script.is_file() or not sample.is_file():
+            return None
+        with tempfile.TemporaryDirectory(prefix='skill-warmup-') as directory:
+            output = Path(directory) / 'warmup.html'
+            result = subprocess.run([sys.executable, str(script), str(sample), '-o', str(output)],
+                                    capture_output=True, text=True)
+        if result.returncode == 0:
+            return None
+        detail = (result.stderr or result.stdout).strip().splitlines()
+        return detail[-1] if detail else 'converter failed'
 
     def agents_content(self, name):
         source = self.source(name) / 'scripts/update_codex_agents.py'
@@ -419,9 +416,9 @@ class Workspace:
                 if runtime:
                     shutil.copytree(runtime, stage / cache, ignore=shutil.ignore_patterns('__pycache__', '*.pyc', '.DS_Store'))
             if operation.get('receipt'):
-                marker = self.marker(operation['name'], hashes)
-                if marker:
-                    write_json(stage / marker[0], marker[1])
+                warning = self.warmup(operation['name'], stage)
+                if warning:
+                    print(f'Warning: {operation["name"]} dependency warm-up failed: {warning}', file=sys.stderr)
                 write_json(stage / RECEIPT, {
                     'schema_version': 1, 'manager': MANAGER, 'name': operation['name'],
                     'platform': operation['platform'], 'installed_at': timestamp(),

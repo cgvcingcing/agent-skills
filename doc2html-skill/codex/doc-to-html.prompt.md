@@ -19,7 +19,7 @@ Codex 首选原生 skill：`$doc-to-html 把 docs/需求.md 转成 HTML`，或�
 3. `~/.claude/skills/doc-to-html/scripts/md2html.py`
 4. `~/.codex/skills/doc-to-html/scripts/md2html.py`
 
-全部未命中 → 告知用户运行 skill 源项目的 `install.sh`。下文以 `<脚本>` 指代定位到的路径。
+全部未命中 → 告知用户在技能总仓库运行 `python3 manage.py sync --platform codex`。下文以 `<脚本>` 指代定位到的路径。
 
 ## 工作流程
 

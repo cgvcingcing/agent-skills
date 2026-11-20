@@ -31,7 +31,7 @@ agent 在执行时按以下顺序定位脚本，**命中即停**：
 
 1. 正在读的 SKILL.md **同目录**的 `scripts/md2html.py`；Codex 兼容 prompt 则定位其同级 `doc-to-html/scripts/md2html.py`；
 2. 依次探测：`~/.dsh/skills/doc-to-html/scripts/md2html.py` → `~/.zcode/skills/doc-to-html/scripts/md2html.py` → `~/.claude/skills/doc-to-html/scripts/md2html.py` → `~/.codex/skills/doc-to-html/scripts/md2html.py` → `~/.codex/prompts/doc-to-html/scripts/md2html.py`；
-3. 全部未命中 → 告知用户在项目根运行 `install.sh`，不要自行猜测其他路径。
+3. 全部未命中 → 告知用户在技能总仓库根运行 `python3 manage.py sync`，不要自行猜测其他路径。
 
 ## 4. CLI 稳定接口（v1）
 
@@ -47,15 +47,15 @@ md2html.py INPUT.md [MORE.md ...] [-o OUTPUT.html] [--title T] [--subtitle S]
 - 相对输入路径按 agent 或终端当前项目目录解析，适用于 IDEA 项目目录；默认在首个输入所在目录生成 HTML，原始输入保留。
 - 图片预览由脚本统一提供：正文缩略图保持在内容列内，独立大图预览默认适应屏幕，支持缩放、拖动、原尺寸与关闭；打印只保留正文图片。带链接的图片保留原有跳转。大图查看不依赖外部脚本或网络，CLI 参数不变。
 - `--cleanup` 删除指定的中间产物（文件或目录，空格分隔，目录检查后整删）；只删显式列出的路径，跳过 `.html` / `.htm` 文件（大小写不敏感）以及本次输出文件。目录中包含 HTML 或本次输出文件时，跳过整个目录并提示；单独执行清理时同样检查并保护目录中的 HTML，目录无法检查或为符号链接时也跳过。不带输入文件单独执行时仅做清理。
-- 语义变更（参数删除、行为反转）必须升 `PROTOCOL` 版本号，并同步三个平台的指令文件与 `install.sh`。
+- 语义变更（参数删除、行为反转）必须升 `PROTOCOL` 版本号，并同步各平台的指令文件与 `skills.json` 资源清单。
 
 ## 5. 一致性维护规则
 
-- `SKILL.md`（workflow 部分）与 `codex/doc-to-html.prompt.md` **语义同步**：改流程必须双改，再重跑 `install.sh`。
-- 安装脚本采用**先清后装**：每次运行先删除旧安装副本（三端 skill 目录、Codex 兼容目录与 prompt 文件），再复制当前版本，保证安装目录里只有新版文件、无历史残留；skill 每次迭代后重跑 `install.sh` 即完成"清理旧版 + 部署新版"。
+- `SKILL.md`（workflow 部分）与 `codex/doc-to-html.prompt.md` **语义同步**：改流程必须双改，再在总仓库根重跑 `python3 manage.py sync`。
+- 安装由总仓库的 `manage.py` 完成：`sync` 整目录替换各平台副本（Codex 兼容目录与 prompt 文件、托管 AGENTS 块一并更新），保证安装目录里只有当前版本、无历史残留；skill 每次迭代后在总仓库根重跑 `python3 manage.py sync` 即完成部署，用 `check` 校验。
 - Codex 全局 AGENTS.md 只更新带 `doc-to-html:start` / `doc-to-html:end` 标记的托管块；旧安装器生成的两行提示可迁移，其他用户内容保留。
-- 依赖（markdown / pymdown-extensions）由脚本自举到各安装副本的 `scripts/_vendor`；`install.sh` 会用真实转换预热，保证离线首跑可用。
-- 卸载：`install.sh --uninstall`（删除三端 skill、Codex 兼容入口与 AGENTS.md 中的托管块；**源项目** `doc2html-skill/` 和其他用户规则不受影响）。
+- 依赖（markdown / pymdown-extensions）由脚本自举到各安装副本的 `scripts/_vendor`；`skills.json` 的 `warmup` 声明让 `manage.py sync` 用一次真实转换预热，保证离线首跑可用。
+- 卸载：`python3 manage.py restore <BACKUP_ID>` 回滚到安装前状态（含 skill 目录、Codex 兼容入口与 AGENTS.md 托管块；**源项目** `doc2html-skill/` 和其他用户规则不受影响）。
 
 ## 6. 版本
 

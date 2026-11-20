@@ -19,7 +19,6 @@ def module(name, file):
 
 
 renderer = module("renderer", "scripts/render_form.py")
-installer = module("installer", "install.py")
 
 
 class RenderTests(unittest.TestCase):
@@ -103,33 +102,6 @@ class RenderTests(unittest.TestCase):
     def test_duplicate_row_ids_do_not_break_row_actions(self):
         data = renderer.normalize({"tables": {"scope": [{"_id": "same"}, {"_id": "same"}]}})
         self.assertEqual(len(set(row["_id"] for row in data["tables"]["scope"])), 2)
-
-
-class InstallTests(unittest.TestCase):
-    def test_repeat_install_copy_and_uninstall(self):
-        with tempfile.TemporaryDirectory() as temp:
-            targets = {name: Path(temp) / name / "test-handoff" for name in ("claude", "codex", "dsh")}
-            with patch.object(installer, "destinations", return_value=targets), patch("sys.argv", ["install.py"]), contextlib.redirect_stdout(io.StringIO()):
-                installer.main()
-                installer.main()
-            for target in targets.values():
-                self.assertTrue(installer.managed(target))
-                self.assertEqual((target / "assets/form.js").read_bytes(), (ROOT / "assets/form.js").read_bytes())
-                self.assertTrue((target / "scripts/render_form.py").is_file())
-            with patch.object(installer, "destinations", return_value=targets), patch("sys.argv", ["install.py", "--uninstall"]), contextlib.redirect_stdout(io.StringIO()):
-                installer.main()
-            self.assertTrue(all(not target.exists() for target in targets.values()))
-
-    def test_unmanaged_directory_is_preserved(self):
-        with tempfile.TemporaryDirectory() as temp:
-            target = Path(temp) / "test-handoff"
-            target.mkdir()
-            sentinel = target / "personal.txt"
-            sentinel.write_text("Keep this")
-            with patch.object(installer, "destinations", return_value={"codex": target}), patch("sys.argv", ["install.py"]), contextlib.redirect_stderr(io.StringIO()):
-                with self.assertRaises(SystemExit):
-                    installer.main()
-            self.assertEqual(sentinel.read_text(), "Keep this")
 
 
 if __name__ == "__main__":

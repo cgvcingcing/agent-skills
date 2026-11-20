@@ -15,7 +15,6 @@ sys.path.insert(0, str(PROJECT / "scripts"))
 from spec2testplan import write_output
 from spec_plan import coverage_rows, load_evidence, read_json, render_plan, validate_plan
 from spec_sources import SpecError, extract_sources, html_blocks, markdown_blocks
-import install as installer
 
 
 def plan_for(evidence):
@@ -475,51 +474,6 @@ class ArtifactTests(unittest.TestCase):
                 self.assertEqual(provenance['sources'][0]['blocks'][1]['locator'], 'L3')
                 self.assertFalse(work.exists())
                 self.assertEqual(list(delivery.iterdir()), [final_document])
-
-
-class InstallerTests(unittest.TestCase):
-    def setUp(self):
-        self.temp = tempfile.TemporaryDirectory(prefix='spec2testplan-install-test-')
-        self.addCleanup(self.temp.cleanup)
-        self.root = Path(self.temp.name)
-        self.args = ['--codex-root', str(self.root / 'codex'), '--claude-root', str(self.root / 'claude'),
-                     '--dsh-root', str(self.root / 'dsh')]
-
-    def test_install_update_check_and_uninstall_preserve_other_skills(self):
-        other = self.root / 'codex/skills/other/keep.txt'
-        other.parent.mkdir(parents=True)
-        other.write_text('keep')
-        self.assertEqual(installer.main(self.args), 0)
-        self.assertEqual(installer.main(self.args + ['--check']), 0)
-        for platform in ('codex', 'claude', 'dsh'):
-            installed = self.root / platform / 'skills/spec2testplan'
-            self.assertEqual((installed / 'SKILL.md').read_bytes(), (PROJECT / 'SKILL.md').read_bytes())
-            result = subprocess.run([sys.executable, str(installed / 'scripts/spec2testplan.py'), '--version'], capture_output=True, text=True)
-            self.assertEqual(result.returncode, 0, result.stderr)
-            (installed / 'obsolete.txt').write_text('old')
-        self.assertEqual(installer.main(self.args), 0)
-        self.assertFalse((self.root / 'codex/skills/spec2testplan/obsolete.txt').exists())
-        self.assertEqual(installer.main(self.args + ['--uninstall']), 0)
-        self.assertTrue(other.is_file())
-        self.assertFalse((self.root / 'claude/skills/spec2testplan').exists())
-        self.assertFalse((self.root / 'dsh/skills/spec2testplan').exists())
-
-    def test_foreign_directory_blocks_both_installations(self):
-        foreign = self.root / 'claude/skills/spec2testplan'
-        foreign.mkdir(parents=True)
-        (foreign / 'keep.txt').write_text('custom skill')
-        self.assertEqual(installer.main(self.args), 2)
-        self.assertFalse((self.root / 'codex/skills/spec2testplan').exists())
-        self.assertTrue((foreign / 'keep.txt').is_file())
-
-    def test_symlink_target_is_not_replaced(self):
-        outside = self.root / 'outside'
-        outside.mkdir()
-        destination = self.root / 'codex/skills/spec2testplan'
-        destination.parent.mkdir(parents=True)
-        destination.symlink_to(outside)
-        self.assertEqual(installer.main(self.args), 2)
-        self.assertTrue(destination.is_symlink())
 
 
 if __name__ == '__main__':

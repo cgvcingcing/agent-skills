@@ -24,7 +24,7 @@ description: 将 Markdown、需求/方案文档（docx、pdf）与方案截图�
 4. `~/.codex/skills/doc-to-html/scripts/md2html.py`
 5. `~/.codex/prompts/doc-to-html/scripts/md2html.py`（旧提示词兼容入口）
 
-全部未命中 → 告知用户运行本 skill 源项目的 `install.sh`，不要猜测其他路径。下文以 `<脚本>` 指代定位到的路径。
+全部未命中 → 告知用户在技能总仓库运行 `python3 manage.py sync --platform <平台>`，不要猜测其他路径。下文以 `<脚本>` 指代定位到的路径。
 
 ## 工作流程
 
@@ -53,7 +53,7 @@ description: 将 Markdown、需求/方案文档（docx、pdf）与方案截图�
 python3 <脚本> assembled.md -o 输出.html --title "文档标题" --subtitle "来源说明"
 ```
 常用参数：`--accent "#4f46e5"` 主题色；`--link-images` 不内嵌图片；`--assets-base DIR` 图片基准目录；多个 md 可一次传入合并；`--cleanup PATH...` 转换成功后顺带删除中间产物（也可自检后单独执行，见第 7 步）。
-首次运行会自动把依赖装到脚本同级 `scripts/_vendor`（不污染系统环境）；安装时 `install.sh` 已预热。
+首次运行会自动把依赖装到脚本同级 `scripts/_vendor`（不污染系统环境）；`manage.py sync` 安装时已用一次真实转换预热。
 
 ### 6. 自检
 - 用无头浏览器截图抽查（如 `chrome --headless --screenshot`），确认：目录链接可跳转、表格无溢出破版、图片正常显示、代码块高亮正常；有大图时检查独立预览的适应屏幕、缩放、拖动和关闭；

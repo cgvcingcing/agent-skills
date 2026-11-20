@@ -19,7 +19,7 @@
 
 ## 安装与使用
 
-管理工具要求 Python 3.9+，只使用标准库；完整测试使用 Python 3.11。文档转换器首次运行时会准备自己的 Markdown 依赖。
+管理工具要求 Python 3.9+，只使用标准库；完整测试使用 Python 3.11。`manage.py` 是唯一的安装器：各平台副本都由 `sync` 生成，源包里不再有单独的安装脚本。
 
 ```bash
 git clone https://github.com/cgvcingcing/agent-skills.git
@@ -55,7 +55,9 @@ python3 manage.py check --platform dsh
 
 默认安装根目录沿用 `~/.codex`、`~/.claude`、`~/.zcode` 和 `~/.dsh`，支持 `CODEX_HOME`、`CLAUDE_CONFIG_DIR`、`DSH_HOME`，也支持 `--codex-root`、`--claude-root`、`--zcode-root`、`--dsh-root` 明确指定根目录。
 
-DSH 从 `~/.dsh/skills/<技能>/SKILL.md` 发现技能，与新会话无关，改动后下一次目录刷新即生效。
+DSH 从 `~/.dsh/skills/<技能>/SKILL.md` 发现技能，与新会话无关，改动后下一次目录刷新即生效；也扫描项目内的 `.dsh/skills` 与 `.agents/skills`，适合放项目专属技能。
+
+`doc-to-html` 的 Markdown 依赖由安装时的一次真实转换预热（`skills.json` 的 `warmup`），因此新克隆的仓库 `sync` 后即可离线使用，无需首次联网自举。
 
 ## 状态与备份
 
