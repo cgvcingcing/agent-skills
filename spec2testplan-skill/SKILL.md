@@ -37,7 +37,7 @@ description: 仅读取用户指定的 HTML、Markdown 需求，生成说明怎�
 - 明确要求 Markdown 或 JSON 时，分别交付 `.testplan.md` 或校验后的 `.testplan.json`。JSON 不作为默认或失败兜底。
 - 内部 `sources.json`、`plan.json`、Markdown 放独立任务临时目录，成功后清理；默认只交付最终文件。
 
-优先使用会话已发现的 `doc-to-html`；未发现时检查本技能相邻目录，以及 `${CODEX_HOME:-~/.codex}/skills/doc-to-html/SKILL.md`、`${CLAUDE_CONFIG_DIR:-~/.claude}/skills/doc-to-html/SKILL.md` 或用户指定入口。找到后读取并遵循该技能，不用自写模板替代。入口不可读、脚本缺失或转换报错属于故障，先诊断，仍失败就说明，不能冒充“未安装”改交其他格式。
+优先使用会话已发现的 `doc-to-html`；未发现时检查本技能相邻目录，以及 `${DSH_HOME:-~/.dsh}/skills/doc-to-html/SKILL.md`、`${CODEX_HOME:-~/.codex}/skills/doc-to-html/SKILL.md`、`${CLAUDE_CONFIG_DIR:-~/.claude}/skills/doc-to-html/SKILL.md` 或用户指定入口。找到后读取并遵循该技能，不用自写模板替代。入口不可读、脚本缺失或转换报错属于故障，先诊断，仍失败就说明，不能冒充“未安装”改交其他格式。
 
 ## 信息边界
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Install the same native skill in Codex and Claude Code."""
+"""Install the same native skill in Codex, Claude Code, and DSH."""
 
 import argparse
 import hashlib
@@ -15,6 +15,8 @@ from pathlib import Path
 NAME = "spec2testplan"
 VERSION = "1.3.0"
 MARKER = ".spec2testplan-install.json"
+# Receipts owned by other installers; replacing the directory must not drop them.
+FOREIGN_RECEIPTS = (".skill-manager.json",)
 PROJECT = Path(__file__).resolve().parent.parent
 PAYLOAD = (
     "SKILL.md", "agents/openai.yaml", "references/output-contract.md",
@@ -63,6 +65,10 @@ def install(destination, hashes):
             target = staging / name
             target.parent.mkdir(parents=True, exist_ok=True)
             shutil.copy2(PROJECT / name, target)
+        for name in FOREIGN_RECEIPTS:
+            carried = destination / name
+            if carried.is_file() and not carried.is_symlink():
+                shutil.copy2(carried, staging / name)
         record = {"name": NAME, "version": VERSION, "files": hashes}
         (staging / MARKER).write_text(json.dumps(record, indent=2) + "\n", encoding="utf-8")
         if destination.exists():
@@ -84,16 +90,17 @@ def install(destination, hashes):
 
 def main(argv=None):
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--target", choices=("all", "codex", "claude"), default="all")
+    parser.add_argument("--target", choices=("all", "codex", "claude", "dsh"), default="all")
     parser.add_argument("--codex-root", default=os.environ.get("CODEX_HOME", str(Path.home() / ".codex")))
     parser.add_argument("--claude-root", default=os.environ.get("CLAUDE_CONFIG_DIR", str(Path.home() / ".claude")))
+    parser.add_argument("--dsh-root", default=os.environ.get("DSH_HOME", str(Path.home() / ".dsh")))
     modes = parser.add_mutually_exclusive_group()
     modes.add_argument("--uninstall", action="store_true")
     modes.add_argument("--check", action="store_true")
     args = parser.parse_args(argv)
     try:
-        roots = {"codex": args.codex_root, "claude": args.claude_root}
-        targets = ["codex", "claude"] if args.target == "all" else [args.target]
+        roots = {"codex": args.codex_root, "claude": args.claude_root, "dsh": args.dsh_root}
+        targets = ["codex", "claude", "dsh"] if args.target == "all" else [args.target]
         destinations = []
         for target in targets:
             destination = Path(roots[target]).expanduser().absolute() / "skills" / NAME

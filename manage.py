@@ -22,6 +22,7 @@ import uuid
 RECEIPT = '.skill-manager.json'
 IGNORED = {'.git', '.idea', '.DS_Store', '__pycache__', '_vendor', '.venv', 'node_modules'}
 MANAGER = 'local-agent-skills'
+PLATFORMS = ['codex', 'claude', 'zcode', 'dsh']
 
 
 def timestamp():
@@ -555,11 +556,11 @@ def build_parser():
         subparser.add_argument('--manifest', type=Path, default=Path(__file__).resolve().with_name('skills.json'))
         subparser.add_argument('--state-dir', type=Path)
         subparser.add_argument('--json', action='store_true')
-        for platform in ['codex', 'claude', 'zcode']:
+        for platform in PLATFORMS:
             subparser.add_argument(f'--{platform}-root', type=Path)
         if command != 'restore':
             subparser.add_argument('skills', nargs='*')
-            subparser.add_argument('--platform', choices=['all', 'codex', 'claude', 'zcode'], default='all')
+            subparser.add_argument('--platform', choices=['all', *PLATFORMS], default='all')
         else:
             subparser.add_argument('backup_id')
         if command in ['install', 'update', 'sync', 'restore']:
@@ -570,7 +571,7 @@ def build_parser():
 def main(argv=None):
     args = build_parser().parse_args(argv)
     try:
-        workspace = Workspace(args.manifest, {name: getattr(args, name + '_root') for name in ['codex', 'claude', 'zcode']}, args.state_dir)
+        workspace = Workspace(args.manifest, {name: getattr(args, name + '_root') for name in PLATFORMS}, args.state_dir)
         result, failed = {}, False
         if args.command == 'restore':
             if args.dry_run:

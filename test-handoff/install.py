@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Install the self-contained skill for Claude Code and Codex."""
+"""Install the self-contained skill for Claude Code, Codex, and DSH."""
 
 import argparse
 from datetime import datetime, timezone
@@ -12,13 +12,16 @@ ROOT = Path(__file__).resolve().parent
 NAME = "test-handoff"
 MARKER = ".test-handoff-install.json"
 RESOURCES = ("SKILL.md", "agents", "scripts", "references", "assets", "examples")
+# Receipts owned by other installers; replacing the directory must not drop them.
+FOREIGN_RECEIPTS = (".skill-manager.json",)
 
 
 def destinations(platform):
     home = Path.home()
     targets = {"claude": home / ".claude" / "skills" / NAME,
-               "codex": Path(os.environ.get("CODEX_HOME") or home / ".codex").expanduser() / "skills" / NAME}
-    return targets if platform == "both" else {platform: targets[platform]}
+               "codex": Path(os.environ.get("CODEX_HOME") or home / ".codex").expanduser() / "skills" / NAME,
+               "dsh": Path(os.environ.get("DSH_HOME") or home / ".dsh").expanduser() / "skills" / NAME}
+    return targets if platform == "all" else {platform: targets[platform]}
 
 
 def managed(path):
@@ -31,7 +34,7 @@ def managed(path):
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--platform", choices=("both", "claude", "codex"), default="both")
+    parser.add_argument("--platform", choices=("all", "both", "claude", "codex", "dsh"), default="all")
     parser.add_argument("--uninstall", action="store_true")
     args = parser.parse_args()
     targets = destinations(args.platform)
@@ -60,6 +63,10 @@ def main():
                     shutil.copytree(source, dest, ignore=shutil.ignore_patterns("__pycache__", "*.pyc", ".DS_Store"))
                 else:
                     shutil.copy2(source, dest)
+            for name in FOREIGN_RECEIPTS:
+                carried = path / name
+                if carried.is_file() and not carried.is_symlink():
+                    shutil.copy2(carried, staging / name)
             (staging / MARKER).write_text(json.dumps({"name": NAME, "installer": "test-handoff", "version": 1,
                 "installedAt": datetime.now(timezone.utc).isoformat()}, indent=2) + "\n", encoding="utf-8")
             if path.exists():

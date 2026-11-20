@@ -21,18 +21,20 @@ bash install.sh --check
 | --- | --- | --- |
 | Codex | `${CODEX_HOME:-~/.codex}/skills/spec2testplan` | `$spec2testplan` |
 | Claude Code | `${CLAUDE_CONFIG_DIR:-~/.claude}/skills/spec2testplan` | `/spec2testplan` |
+| DSH | `${DSH_HOME:-~/.dsh}/skills/spec2testplan` | `/spec2testplan` |
 
-安装后在新会话中调用。两端使用同一份 `SKILL.md` 和脚本；具体设计文字可能随模型与输入变化。安装器仅管理本技能目录，不修改全局 `AGENTS.md`、`CLAUDE.md` 或其他技能，也不自动安装 `doc-to-html`。
+安装后在新会话中调用。各端使用同一份 `SKILL.md` 和脚本；具体设计文字可能随模型与输入变化。安装器仅管理本技能目录，不修改全局 `AGENTS.md`、`CLAUDE.md` 或其他技能，也不自动安装 `doc-to-html`。
 
 可单独选择平台或卸载：
 
 ```bash
 bash install.sh --target codex
 bash install.sh --target claude
+bash install.sh --target dsh
 bash install.sh --uninstall
 ```
 
-支持 `--codex-root DIR`、`--claude-root DIR` 指定配置根目录。覆盖或卸载仅适用于带本项目管理标记的目录，遇到其他同名目录会报错并保留内容。
+支持 `--codex-root DIR`、`--claude-root DIR`、`--dsh-root DIR` 指定配置根目录。覆盖或卸载仅适用于带本项目管理标记的目录，遇到其他同名目录会报错并保留内容。
 
 ## 使用
 

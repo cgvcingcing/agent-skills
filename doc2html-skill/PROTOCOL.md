@@ -1,6 +1,6 @@
-# doc-to-html 平台适配协议（PROTOCOL v1.4）
+# doc-to-html 平台适配协议（PROTOCOL v1.5）
 
-本文件是 doc2html-skill 的**契约**：定义同一份技能如何映射到 Claude Code、Codex、ZCode 三个平台，以及各平台副本必须遵守的路径与接口规则。改动任何一侧（SKILL.md / prompt / 脚本 CLI）前先读本文件。
+本文件是 doc2html-skill 的**契约**：定义同一份技能如何映射到 Claude Code、Codex、ZCode、DSH 四个平台，以及各平台副本必须遵守的路径与接口规则。改动任何一侧（SKILL.md / prompt / 脚本 CLI）前先读本文件。
 
 ## 1. 平台映射
 
@@ -8,10 +8,11 @@
 | --- | --- | --- |
 | Claude Code | `~/.claude/skills/doc-to-html/SKILL.md` | 同目录 `scripts/md2html.py` |
 | ZCode | `~/.zcode/skills/doc-to-html/SKILL.md` | 同目录 `scripts/md2html.py` |
+| DSH | `~/.dsh/skills/doc-to-html/SKILL.md` | 同目录 `scripts/md2html.py` |
 | Codex 原生 skill | `~/.codex/skills/doc-to-html/SKILL.md` | 同目录 `scripts/md2html.py` |
 | Codex 兼容 prompt | `~/.codex/prompts/doc-to-html.md` | 同级目录 `doc-to-html/scripts/md2html.py` |
 
-- Claude Code、ZCode 与 Codex 原生入口共用**同一份** `SKILL.md`（逐字相同），仅安装位置不同。
+- Claude Code、ZCode、DSH 与 Codex 原生入口共用**同一份** `SKILL.md`（逐字相同），仅安装位置不同。
 - Codex 的兼容 prompt 是等价改写（无 frontmatter、路径写法不同），语义必须与 SKILL.md 保持一致。原生 skill 使用 `$doc-to-html`，也可通过 `/skills` 选择；Claude Code 使用 `/doc-to-html`。兼容提示词在支持该功能的 CLI 中使用 `/prompts:doc-to-html`。
 - 每个安装副本附带 `PROTOCOL.md`、`style-guide.md`（手工增强指引）与 `scripts/_vendor/`（Python 依赖，安装时预热生成）。设置了自定义 `CODEX_HOME` 时，Codex 安装根随之调整。
 
@@ -29,7 +30,7 @@
 agent 在执行时按以下顺序定位脚本，**命中即停**：
 
 1. 正在读的 SKILL.md **同目录**的 `scripts/md2html.py`；Codex 兼容 prompt 则定位其同级 `doc-to-html/scripts/md2html.py`；
-2. 依次探测：`~/.zcode/skills/doc-to-html/scripts/md2html.py` → `~/.claude/skills/doc-to-html/scripts/md2html.py` → `~/.codex/skills/doc-to-html/scripts/md2html.py` → `~/.codex/prompts/doc-to-html/scripts/md2html.py`；
+2. 依次探测：`~/.dsh/skills/doc-to-html/scripts/md2html.py` → `~/.zcode/skills/doc-to-html/scripts/md2html.py` → `~/.claude/skills/doc-to-html/scripts/md2html.py` → `~/.codex/skills/doc-to-html/scripts/md2html.py` → `~/.codex/prompts/doc-to-html/scripts/md2html.py`；
 3. 全部未命中 → 告知用户在项目根运行 `install.sh`，不要自行猜测其他路径。
 
 ## 4. CLI 稳定接口（v1）
@@ -63,3 +64,4 @@ md2html.py INPUT.md [MORE.md ...] [-o OUTPUT.html] [--title T] [--subtitle S]
 - PROTOCOL v1.2（2026-10-08）：修复清理目录时可能删除最终 HTML 的问题；清理前检查目录中的 HTML 与本次输出文件，命中后跳过整目录，独立清理同样生效；目录无法检查或为符号链接时跳过。CLI 参数不变。
 - PROTOCOL v1.3（2026-10-08）：增加 Codex 原生 skill，与 Claude Code / ZCode 共用 SKILL.md；修正显式调用方式，保留旧 prompt；安装副本携带协议文件；Codex 全局入口采用有边界的托管块，迁移和卸载保留其他规则；补充 IDEA 项目目录用法。
 - PROTOCOL v1.4（2026-10-09）：脚本统一提供独立大图预览，替换正文框内的原尺寸滚动控件；默认适应屏幕，支持缩放、拖动、原尺寸与关闭，打印隐藏预览控件；修复图片属性顺序不同时未能内嵌的问题。CLI 参数不变。
+- PROTOCOL v1.5（2026-11-20）：新增 DSH 平台映射（`~/.dsh/skills/doc-to-html/`，与其余原生入口共用同一份 SKILL.md），脚本发现顺序补入 DSH 目录。CLI 参数与产物不变。

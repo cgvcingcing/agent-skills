@@ -20,13 +20,16 @@
 python3 install.py
 ```
 
-默认安装到 `~/.claude/skills/test-handoff` 和 `${CODEX_HOME:-~/.codex}/skills/test-handoff`。安装副本包含同一套技能正文、脚本和模板。安装器仅更新自己管理的目录，不修改全局配置。
+默认安装到 `~/.claude/skills/test-handoff`、`${CODEX_HOME:-~/.codex}/skills/test-handoff` 和 `${DSH_HOME:-~/.dsh}/skills/test-handoff`。安装副本包含同一套技能正文、脚本和模板。安装器仅更新自己管理的目录，不修改全局配置。
 
 ```bash
 python3 install.py --platform codex
 python3 install.py --platform claude
+python3 install.py --platform dsh
 python3 install.py --uninstall
 ```
+
+`--platform` 沿用旧的 `both` 取值（等价于 Codex + Claude Code）；不传时安装全部三端。
 
 ## 使用
 

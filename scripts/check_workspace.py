@@ -26,7 +26,7 @@ def invoke(arguments, cwd=ROOT):
 def check_installations():
     with tempfile.TemporaryDirectory(prefix='agent-skills-check-') as directory:
         scratch = Path(directory)
-        roots = {name: scratch / name for name in ['codex', 'claude', 'zcode']}
+        roots = {name: scratch / name for name in ['codex', 'claude', 'zcode', 'dsh']}
         options = ['--state-dir', str(scratch / 'state')]
         for platform, path in roots.items():
             options.extend([f'--{platform}-root', str(path)])

@@ -4,16 +4,16 @@
 
 大图由转换脚本统一提供独立预览，默认适应屏幕，支持缩放、拖动、原尺寸和关闭。无需在正文图片框内手工加入原尺寸滚动开关。
 
-核心转换是确定性脚本 `scripts/md2html.py`，因此 **Claude Code、Codex、ZCode 三端行为完全一致**——agent 只负责收集输入、读图转写、组织 markdown，排版一律交给脚本。三平台如何装配与寻路由 [PROTOCOL.md](PROTOCOL.md) 契约约束。
+核心转换是确定性脚本 `scripts/md2html.py`，因此 **Claude Code、Codex、ZCode、DSH 四端行为完全一致**——agent 只负责收集输入、读图转写、组织 markdown，排版一律交给脚本。各平台如何装配与寻路由 [PROTOCOL.md](PROTOCOL.md) 契约约束。
 
 ## 项目结构
 
 ```
 doc2html-skill/
-├── SKILL.md                        # 技能定义（三端原生 skill 共用，逐字相同）
-├── PROTOCOL.md                     # 三平台适配契约：目录映射、路径规则、发现顺序、CLI 稳定接口
+├── SKILL.md                        # 技能定义（各平台原生 skill 共用，逐字相同）
+├── PROTOCOL.md                     # 平台适配契约：目录映射、路径规则、发现顺序、CLI 稳定接口
 ├── AGENTS.md                       # 本文件：任意 agent 进入本仓库时的说明
-├── install.sh                      # 一键安装三平台；--uninstall 卸载
+├── install.sh                      # 一键安装各平台；--uninstall 卸载
 ├── scripts/
 │   ├── md2html.py                  # 核心转换器（依赖自举到 scripts/_vendor）
 │   ├── update_codex_agents.py      # 维护 Codex 托管入口，保留其他用户规则
@@ -29,7 +29,7 @@ doc2html-skill/
 ## 安装与卸载
 
 ```bash
-bash install.sh             # 在项目根目录执行，三平台全装
+bash install.sh             # 在项目根目录执行，各平台全装
 bash install.sh --uninstall # 卸载（源项目保留）
 ```
 
@@ -39,14 +39,15 @@ bash install.sh --uninstall # 卸载（源项目保留）
 | --- | --- | --- |
 | Claude Code | `~/.claude/skills/doc-to-html/SKILL.md` | 同目录 `scripts/` |
 | ZCode | `~/.zcode/skills/doc-to-html/SKILL.md` | 同目录 `scripts/` |
+| DSH | `~/.dsh/skills/doc-to-html/SKILL.md` | 同目录 `scripts/` |
 | Codex 原生 skill | `~/.codex/skills/doc-to-html/SKILL.md` | 同目录 `scripts/` |
 | Codex 兼容 prompt | `~/.codex/prompts/doc-to-html.md` | 同级 `doc-to-html/scripts/` |
 
-显式调用：Codex 使用 `$doc-to-html`（或 `/skills` 中选择），Claude Code 使用 `/doc-to-html`；支持自定义 prompt 的 Codex CLI 可继续使用 `/prompts:doc-to-html`。在 IDEA 中从业务项目目录启动 agent，指定 `docs/需求.md`，默认生成 `docs/需求.html`。完整示例见 [README.md](README.md)。
+显式调用：Codex 使用 `$doc-to-html`（或 `/skills` 中选择），Claude Code 与 DSH 使用 `/doc-to-html`；支持自定义 prompt 的 Codex CLI 可继续使用 `/prompts:doc-to-html`。在 IDEA 中从业务项目目录启动 agent，指定 `docs/需求.md`，默认生成 `docs/需求.html`。完整示例见 [README.md](README.md)。
 
 ## 硬规则：零机器绝对路径
 
-**任何安装到平台目录的文件，禁止写入机器特定绝对路径**（PROTOCOL.md §2）。路径只允许两种写法：相对本文件定位，或 `~` 开头的用户级路径。agent 运行时按 PROTOCOL.md §3 的发现顺序定位脚本。修改 skill 内容时请遵守该规则并同步三端，再重跑 `install.sh`。
+**任何安装到平台目录的文件，禁止写入机器特定绝对路径**（PROTOCOL.md §2）。路径只允许两种写法：相对本文件定位，或 `~` 开头的用户级路径。agent 运行时按 PROTOCOL.md §3 的发现顺序定位脚本。修改 skill 内容时请遵守该规则并同步各端，再重跑 `install.sh`。
 
 ## 直接用命令行（不经过任何 agent）
 

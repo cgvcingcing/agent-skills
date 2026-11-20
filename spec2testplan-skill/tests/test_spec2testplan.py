@@ -482,7 +482,8 @@ class InstallerTests(unittest.TestCase):
         self.temp = tempfile.TemporaryDirectory(prefix='spec2testplan-install-test-')
         self.addCleanup(self.temp.cleanup)
         self.root = Path(self.temp.name)
-        self.args = ['--codex-root', str(self.root / 'codex'), '--claude-root', str(self.root / 'claude')]
+        self.args = ['--codex-root', str(self.root / 'codex'), '--claude-root', str(self.root / 'claude'),
+                     '--dsh-root', str(self.root / 'dsh')]
 
     def test_install_update_check_and_uninstall_preserve_other_skills(self):
         other = self.root / 'codex/skills/other/keep.txt'
@@ -490,7 +491,7 @@ class InstallerTests(unittest.TestCase):
         other.write_text('keep')
         self.assertEqual(installer.main(self.args), 0)
         self.assertEqual(installer.main(self.args + ['--check']), 0)
-        for platform in ('codex', 'claude'):
+        for platform in ('codex', 'claude', 'dsh'):
             installed = self.root / platform / 'skills/spec2testplan'
             self.assertEqual((installed / 'SKILL.md').read_bytes(), (PROJECT / 'SKILL.md').read_bytes())
             result = subprocess.run([sys.executable, str(installed / 'scripts/spec2testplan.py'), '--version'], capture_output=True, text=True)
@@ -501,6 +502,7 @@ class InstallerTests(unittest.TestCase):
         self.assertEqual(installer.main(self.args + ['--uninstall']), 0)
         self.assertTrue(other.is_file())
         self.assertFalse((self.root / 'claude/skills/spec2testplan').exists())
+        self.assertFalse((self.root / 'dsh/skills/spec2testplan').exists())
 
     def test_foreign_directory_blocks_both_installations(self):
         foreign = self.root / 'claude/skills/spec2testplan'

@@ -108,7 +108,7 @@ class RenderTests(unittest.TestCase):
 class InstallTests(unittest.TestCase):
     def test_repeat_install_copy_and_uninstall(self):
         with tempfile.TemporaryDirectory() as temp:
-            targets = {name: Path(temp) / name / "test-handoff" for name in ("claude", "codex")}
+            targets = {name: Path(temp) / name / "test-handoff" for name in ("claude", "codex", "dsh")}
             with patch.object(installer, "destinations", return_value=targets), patch("sys.argv", ["install.py"]), contextlib.redirect_stdout(io.StringIO()):
                 installer.main()
                 installer.main()

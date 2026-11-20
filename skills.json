@@ -10,13 +10,14 @@
   "platforms": {
     "codex": {"default_root": "~/.codex", "environment": "CODEX_HOME"},
     "claude": {"default_root": "~/.claude", "environment": "CLAUDE_CONFIG_DIR"},
-    "zcode": {"default_root": "~/.zcode"}
+    "zcode": {"default_root": "~/.zcode"},
+    "dsh": {"default_root": "~/.dsh", "environment": "DSH_HOME"}
   },
   "skills": {
     "doc-to-html": {
       "repository": "doc2html-skill",
       "source": ".",
-      "platforms": ["codex", "claude", "zcode"],
+      "platforms": ["codex", "claude", "zcode", "dsh"],
       "resources": [
         "SKILL.md", "PROTOCOL.md", "scripts/md2html.py",
         {"source": "references/style-guide.md", "target": "style-guide.md"}
@@ -27,7 +28,7 @@
     "interaction-flow": {
       "repository": "interaction-flow",
       "source": ".",
-      "platforms": ["codex", "claude"],
+      "platforms": ["codex", "claude", "dsh"],
       "resources": [
         "SKILL.md", "scripts/render_flow.py", "references/flow-model.md", "assets/output-template.md",
         {"source": "agents/openai.yaml", "target": "agents/openai.yaml", "platforms": ["codex"]}
@@ -36,7 +37,7 @@
     "spec2testplan": {
       "repository": "spec2testplan-skill",
       "source": ".",
-      "platforms": ["codex", "claude"],
+      "platforms": ["codex", "claude", "dsh"],
       "resources": [
         "SKILL.md", "agents/openai.yaml", "references/output-contract.md",
         "scripts/spec2testplan.py", "scripts/spec_sources.py", "scripts/spec_plan.py", "scripts/plan_view.py"
@@ -49,19 +50,19 @@
     "extract-test-points": {
       "repository": "test-analysis-framework",
       "source": "skill-extract-test-points",
-      "platforms": ["codex"],
+      "platforms": ["codex", "dsh"],
       "resources": ["SKILL.md", "agents", "references", "scripts"]
     },
     "generate-test-cases": {
       "repository": "test-analysis-framework",
       "source": "skill-generate-test-cases",
-      "platforms": ["codex"],
+      "platforms": ["codex", "dsh"],
       "resources": ["SKILL.md", "agents", "references", "scripts"]
     },
     "test-handoff": {
       "repository": "test-handoff",
       "source": ".",
-      "platforms": ["codex", "claude"],
+      "platforms": ["codex", "claude", "dsh"],
       "resources": ["SKILL.md", "agents", "scripts", "references", "assets", "examples"],
       "compatibility_marker": {"path": ".test-handoff-install.json", "installer": "test-handoff", "version": 1}
     }

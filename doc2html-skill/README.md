@@ -12,7 +12,7 @@
 bash install.sh
 ```
 
-安装后打开新的 agent 会话。Codex 原生入口为 `~/.codex/skills/doc-to-html/`，Claude Code 为 `~/.claude/skills/doc-to-html/`。Codex 旧提示词入口保留兼容；自定义 `CODEX_HOME` 时，Codex 安装目录跟随该设置。
+安装后打开新的 agent 会话。Codex 原生入口为 `~/.codex/skills/doc-to-html/`，Claude Code 为 `~/.claude/skills/doc-to-html/`，DSH 为 `${DSH_HOME:-~/.dsh}/skills/doc-to-html/`。Codex 旧提示词入口保留兼容；自定义 `CODEX_HOME` 时，Codex 安装目录跟随该设置。
 
 ## 快捷调用
 

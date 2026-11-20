@@ -1,6 +1,6 @@
 # doc-to-html：把 Markdown / 方案截图（含文字）/ 需求方案文档转换成本地单文件 HTML
 
-本提示词与 Claude Code / ZCode 的 doc-to-html skill 等价（契约见该项目 PROTOCOL.md），共用同一转换脚本，保证各端产物一致。脚本产物自带可折叠侧栏目录与分节楼层配色。
+本提示词与 Claude Code / ZCode / DSH 的 doc-to-html skill 等价（契约见该项目 PROTOCOL.md），共用同一转换脚本，保证各端产物一致。脚本产物自带可折叠侧栏目录与分节楼层配色。
 
 Codex 首选原生 skill：`$doc-to-html 把 docs/需求.md 转成 HTML`，或在 `/skills` 中选择 doc-to-html。此文件保留为兼容提示词；支持自定义 prompt 的 CLI 使用 `/prompts:doc-to-html`。相对输入路径按当前项目目录解析，默认输出到第一个输入所在目录，例如 `docs/需求.html`。
 
@@ -14,9 +14,10 @@ Codex 首选原生 skill：`$doc-to-html 把 docs/需求.md 转成 HTML`，或�
 
 若该路径不存在，按顺序探测（命中即停）：
 
-1. `~/.zcode/skills/doc-to-html/scripts/md2html.py`
-2. `~/.claude/skills/doc-to-html/scripts/md2html.py`
-3. `~/.codex/skills/doc-to-html/scripts/md2html.py`
+1. `~/.dsh/skills/doc-to-html/scripts/md2html.py`
+2. `~/.zcode/skills/doc-to-html/scripts/md2html.py`
+3. `~/.claude/skills/doc-to-html/scripts/md2html.py`
+4. `~/.codex/skills/doc-to-html/scripts/md2html.py`
 
 全部未命中 → 告知用户运行 skill 源项目的 `install.sh`。下文以 `<脚本>` 指代定位到的路径。
 

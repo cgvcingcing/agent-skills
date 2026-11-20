@@ -24,8 +24,10 @@ class InstallTests(unittest.TestCase):
         shutil.copytree(PROJECT, self.source, ignore=shutil.ignore_patterns("__pycache__", "*.pyc", ".git"))
         self.codex_home = self.root / "codex config"
         self.claude_home = self.root / "claude 配置"
+        self.dsh_home = self.root / "dsh 配置"
         self.codex_skill = self.codex_home / "skills/interaction-flow"
         self.claude_skill = self.claude_home / "skills/interaction-flow"
+        self.dsh_skill = self.dsh_home / "skills/interaction-flow"
         self.invocation = self.root / "business project 业务"
         self.invocation.mkdir()
 
@@ -45,6 +47,7 @@ class InstallTests(unittest.TestCase):
             "--target", target,
             "--codex-home", str(self.codex_home),
             "--claude-home", str(self.claude_home),
+            "--dsh-home", str(self.dsh_home),
             expected=expected,
         )
 
@@ -54,10 +57,12 @@ class InstallTests(unittest.TestCase):
             expected = (self.source / relative).read_bytes()
             self.assertEqual((self.codex_skill / relative).read_bytes(), expected)
             self.assertEqual((self.claude_skill / relative).read_bytes(), expected)
+            self.assertEqual((self.dsh_skill / relative).read_bytes(), expected)
         self.assertTrue((self.codex_skill / "agents/openai.yaml").is_file())
-        self.assertFalse((self.claude_skill / "agents").exists())
-        self.assertFalse((self.claude_skill / "tests").exists())
-        self.assertFalse((self.claude_skill / "scripts/install_skill.py").exists())
+        for skill in [self.claude_skill, self.dsh_skill]:
+            self.assertFalse((skill / "agents").exists())
+            self.assertFalse((skill / "tests").exists())
+            self.assertFalse((skill / "scripts/install_skill.py").exists())
 
     def test_single_platform_install_preserves_other_configuration(self):
         unrelated = self.claude_home / "skills/another-skill/SKILL.md"
@@ -68,6 +73,7 @@ class InstallTests(unittest.TestCase):
         self.install("claude")
         self.assertTrue((self.claude_skill / "SKILL.md").is_file())
         self.assertFalse(self.codex_home.exists())
+        self.assertFalse(self.dsh_home.exists())
         self.assertEqual(unrelated.read_text(), "Existing user skill")
         self.assertEqual(global_instructions.read_text(), "Existing global instructions")
 
@@ -81,16 +87,18 @@ class InstallTests(unittest.TestCase):
         self.assertFalse(stale.exists())
         self.assertEqual((self.claude_skill / "SKILL.md").read_bytes(), entry.read_bytes())
         self.assertEqual((self.codex_skill / "SKILL.md").read_bytes(), entry.read_bytes())
-        for configuration in [self.codex_home, self.claude_home]:
+        for configuration in [self.codex_home, self.claude_home, self.dsh_home]:
             self.assertFalse(list((configuration / "skills").glob(".interaction-flow-*")))
 
     def test_environment_roots_are_supported_without_changing_user_home(self):
         environment = os.environ.copy()
         environment["CODEX_HOME"] = str(self.codex_home)
         environment["CLAUDE_CONFIG_DIR"] = str(self.claude_home)
+        environment["DSH_HOME"] = str(self.dsh_home)
         self.run_installer(environment=environment)
         self.assertTrue((self.codex_skill / "SKILL.md").is_file())
         self.assertTrue((self.claude_skill / "SKILL.md").is_file())
+        self.assertTrue((self.dsh_skill / "SKILL.md").is_file())
 
     def test_unrelated_destination_is_preserved_before_any_install(self):
         self.claude_skill.mkdir(parents=True)
@@ -113,6 +121,14 @@ class InstallTests(unittest.TestCase):
         self.assertEqual((source / "SKILL.md").read_bytes(), before)
         self.assertTrue((source / "install.sh").is_file())
 
+    def test_installer_keeps_receipts_owned_by_other_tools(self):
+        self.install("dsh")
+        receipt = self.dsh_skill / ".skill-manager.json"
+        receipt.write_text('{"manager": "local-agent-skills"}\n')
+        self.install("dsh")
+        self.assertEqual('{"manager": "local-agent-skills"}\n', receipt.read_text())
+        self.assertTrue((self.dsh_skill / "SKILL.md").is_file())
+
     def test_installed_renderers_run_from_a_different_project_directory(self):
         self.install()
         reference = (self.source / "references/flow-model.md").read_text()
@@ -120,7 +136,7 @@ class InstallTests(unittest.TestCase):
         model_path = self.invocation / "service flow.json"
         model_path.write_text(json.dumps(model, ensure_ascii=False))
         rendered = []
-        for platform, skill in [("codex", self.codex_skill), ("claude", self.claude_skill)]:
+        for platform, skill in [("codex", self.codex_skill), ("claude", self.claude_skill), ("dsh", self.dsh_skill)]:
             output = self.invocation / f"{platform} flow.svg"
             result = subprocess.run(
                 [sys.executable, str(skill / "scripts/render_flow.py"), model_path.name, "-o", output.name],
@@ -133,7 +149,8 @@ class InstallTests(unittest.TestCase):
             self.assertIn("并行分支", content)
             self.assertIn("order_id", content)
             rendered.append(output.read_bytes())
-        self.assertEqual(rendered[0], rendered[1])
+        for output_bytes in rendered[1:]:
+            self.assertEqual(output_bytes, rendered[0])
 
 
 if __name__ == "__main__":

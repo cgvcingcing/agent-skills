@@ -22,7 +22,7 @@ class ManagerTests(unittest.TestCase):
         self.root = Path(self.temporary.name)
         self.workspace = self.root / 'workspace'
         self.workspace.mkdir()
-        self.roots = {name: self.root / name for name in ['codex', 'claude', 'zcode']}
+        self.roots = {name: self.root / name for name in ['codex', 'claude', 'zcode', 'dsh']}
         self.config = {
             'schema_version': 1, 'repositories': {},
             'platforms': {name: {'default_root': str(path)} for name, path in self.roots.items()},
@@ -38,7 +38,7 @@ class ManagerTests(unittest.TestCase):
             self.initialize_repository(source)
             self.config['repositories'][name] = {'path': name, 'url': 'https://example.invalid/' + name}
             self.config['skills'][name] = {
-                'repository': name, 'source': '.', 'platforms': ['codex', 'claude'],
+                'repository': name, 'source': '.', 'platforms': ['codex', 'claude', 'dsh'],
                 'resources': ['SKILL.md', 'scripts'],
             }
         self.manifest = self.workspace / 'skills.json'
@@ -262,6 +262,16 @@ class ManagerTests(unittest.TestCase):
             workspace.plan(workspace.selection(['doc-to-html'], 'codex'))
         self.assertFalse((self.roots['codex'] / 'skills').exists())
         self.assertEqual('Existing rules.\n<!-- doc-to-html:start -->\n', agents.read_text())
+
+    def test_dsh_installation_skips_codex_legacy_entries(self):
+        self.config['skills']['alpha']['codex_legacy'] = True
+        self.save_manifest()
+        self.sync(['alpha'], platform='dsh')
+        self.assertEqual('ok', self.context().status('alpha', 'dsh')['status'])
+        self.assertFalse((self.roots['dsh'] / 'agents').exists())
+        self.assertFalse((self.roots['dsh'] / 'prompts').exists())
+        self.assertFalse(self.roots['codex'].exists())
+        self.assertEqual([], self.sync(['alpha'], platform='dsh')['changed'])
 
     def test_cli_check_exit_status_and_json(self):
         arguments = ['python3', str(PROJECT / 'manage.py'), 'check', '--manifest', str(self.manifest), '--platform', 'codex', '--json']

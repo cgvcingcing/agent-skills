@@ -6,14 +6,14 @@
 
 | 技能 | 用途 | 调用 | 支持平台 |
 | --- | --- | --- | --- |
-| [文档转 HTML](doc2html-skill/SKILL.md) | Markdown、Word、PDF、方案截图转离线 HTML | `$doc-to-html` | Codex、Claude Code、ZCode |
-| [交互闭环解读](interaction-flow/SKILL.md) | 梳理业务流程、模块联动和数据交互 | `$interaction-flow` | Codex、Claude Code |
-| [需求转测试方案](spec2testplan-skill/SKILL.md) | 说明怎么测、先测什么、重点风险和优先级 | `$spec2testplan` | Codex、Claude Code |
-| [提炼测试点](test-analysis-framework/skill-extract-test-points/SKILL.md) | 从需求材料提取可追溯测试点 | `$extract-test-points` | Codex |
-| [生成测试用例](test-analysis-framework/skill-generate-test-cases/SKILL.md) | 根据测试点或需求生成用例和 XMind | `$generate-test-cases` | Codex |
-| [开发提测交接表](test-handoff/SKILL.md) | 生成开发可填写的离线提测表 | `$test-handoff` | Codex、Claude Code |
+| [文档转 HTML](doc2html-skill/SKILL.md) | Markdown、Word、PDF、方案截图转离线 HTML | `$doc-to-html` | Codex、Claude Code、ZCode、DSH |
+| [交互闭环解读](interaction-flow/SKILL.md) | 梳理业务流程、模块联动和数据交互 | `$interaction-flow` | Codex、Claude Code、DSH |
+| [需求转测试方案](spec2testplan-skill/SKILL.md) | 说明怎么测、先测什么、重点风险和优先级 | `$spec2testplan` | Codex、Claude Code、DSH |
+| [提炼测试点](test-analysis-framework/skill-extract-test-points/SKILL.md) | 从需求材料提取可追溯测试点 | `$extract-test-points` | Codex、DSH |
+| [生成测试用例](test-analysis-framework/skill-generate-test-cases/SKILL.md) | 根据测试点或需求生成用例和 XMind | `$generate-test-cases` | Codex、DSH |
+| [开发提测交接表](test-handoff/SKILL.md) | 生成开发可填写的离线提测表 | `$test-handoff` | Codex、Claude Code、DSH |
 
-表中列出 Codex 调用方式。Claude Code 使用对应的 `/技能标识` 调用。文件名、技能标识和原有调用方式保留。
+表中列出 Codex 调用方式。Claude Code 与 DSH 使用对应的 `/技能标识` 调用。文件名、技能标识和原有调用方式保留。
 
 `spec2testplan` 推荐使用 `doc-to-html` 生成默认的 HTML 方案，统一安装入口会将这项依赖一起纳入计划。
 
@@ -47,11 +47,15 @@ python3 manage.py check
 python3 manage.py sync test-handoff --platform claude --dry-run
 python3 manage.py sync test-handoff --platform claude
 python3 manage.py check test-handoff --platform claude
+python3 manage.py sync --platform dsh
+python3 manage.py check --platform dsh
 ```
 
 `install`、`update` 和 `sync` 都安装当前检出的源码版本。需要获取远程更新时，先处理本地修改并拉取总仓库，再运行 `sync`。
 
-默认安装根目录沿用 `~/.codex`、`~/.claude` 和 `~/.zcode`，支持 `CODEX_HOME`、`CLAUDE_CONFIG_DIR`，也支持 `--codex-root`、`--claude-root`、`--zcode-root` 明确指定根目录。
+默认安装根目录沿用 `~/.codex`、`~/.claude`、`~/.zcode` 和 `~/.dsh`，支持 `CODEX_HOME`、`CLAUDE_CONFIG_DIR`、`DSH_HOME`，也支持 `--codex-root`、`--claude-root`、`--zcode-root`、`--dsh-root` 明确指定根目录。
+
+DSH 从 `~/.dsh/skills/<技能>/SKILL.md` 发现技能，与新会话无关，改动后下一次目录刷新即生效。
 
 ## 状态与备份
 

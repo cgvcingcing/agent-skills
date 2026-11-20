@@ -11,16 +11,18 @@ description: 将 Markdown、需求/方案文档（docx、pdf）与方案截图�
 
 - Codex：`$doc-to-html 把 docs/需求.md 转成 HTML`，也可在 `/skills` 中选择本技能。
 - Claude Code：`/doc-to-html 把 docs/需求.md 转成 HTML`。
+- DSH：`/doc-to-html 把 docs/需求.md 转成 HTML`，或直接说“把 docs/需求.md 转成 HTML”。
 - 各端也可直接说“把 docs/需求.md 转成 HTML”。在 IDEA 中，从业务项目目录启动 agent 会话，按当前项目目录解析相对输入路径。
 
 ## 脚本定位（契约，见 PROTOCOL.md §3）
 
 转换脚本 `scripts/md2html.py` 与**本 SKILL.md 同目录**——首选直接用该相对路径。若上下文缺失定位不到，按顺序探测（命中即停）：
 
-1. `~/.zcode/skills/doc-to-html/scripts/md2html.py`
-2. `~/.claude/skills/doc-to-html/scripts/md2html.py`
-3. `~/.codex/skills/doc-to-html/scripts/md2html.py`
-4. `~/.codex/prompts/doc-to-html/scripts/md2html.py`（旧提示词兼容入口）
+1. `~/.dsh/skills/doc-to-html/scripts/md2html.py`
+2. `~/.zcode/skills/doc-to-html/scripts/md2html.py`
+3. `~/.claude/skills/doc-to-html/scripts/md2html.py`
+4. `~/.codex/skills/doc-to-html/scripts/md2html.py`
+5. `~/.codex/prompts/doc-to-html/scripts/md2html.py`（旧提示词兼容入口）
 
 全部未命中 → 告知用户运行本 skill 源项目的 `install.sh`，不要猜测其他路径。下文以 `<脚本>` 指代定位到的路径。
 

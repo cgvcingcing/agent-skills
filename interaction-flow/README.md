@@ -8,7 +8,7 @@
 
 ## 安装
 
-需要 Python 3.9 或以上版本，以及 Codex 或 Claude Code。安装和 SVG 渲染只使用 Python 标准库，不下载依赖。
+需要 Python 3.9 或以上版本，以及 Codex、Claude Code 或 DSH。安装和 SVG 渲染只使用 Python 标准库，不下载依赖。
 
 在本项目目录运行：
 
@@ -16,25 +16,28 @@
 bash install.sh
 ```
 
-默认安装到两端的个人技能目录，重复执行会更新本技能的安装副本：
+默认安装到各平台的个人技能目录，重复执行会更新本技能的安装副本：
 
 | 平台 | 默认安装目录 | 调用 |
 | --- | --- | --- |
 | Codex | `~/.codex/skills/interaction-flow/` | `$interaction-flow` |
 | Claude Code | `~/.claude/skills/interaction-flow/` | `/interaction-flow` |
+| DSH | `${DSH_HOME:-~/.dsh}/skills/interaction-flow/` | `/interaction-flow` |
 
 仅安装一端：
 
 ```bash
 bash install.sh --target claude
 bash install.sh --target codex
+bash install.sh --target dsh
 ```
 
-支持 `CODEX_HOME` 和 `CLAUDE_CONFIG_DIR`。也可以指定配置根目录，脚本会在其下创建 `skills/interaction-flow/`：
+支持 `CODEX_HOME`、`CLAUDE_CONFIG_DIR` 和 `DSH_HOME`。也可以指定配置根目录，脚本会在其下创建 `skills/interaction-flow/`：
 
 ```bash
 bash install.sh --target claude --claude-home "/path/to/claude-config"
 bash install.sh --target codex --codex-home "/path/to/codex-config"
+bash install.sh --target dsh --dsh-home "/path/to/dsh-home"
 ```
 
 源项目与安装副本分开保存。安装器只替换本技能目录，不修改全局 `AGENTS.md`、`CLAUDE.md` 或其他技能；更新前先准备新副本，目录替换失败时恢复旧副本。安装后在新会话中使用。
